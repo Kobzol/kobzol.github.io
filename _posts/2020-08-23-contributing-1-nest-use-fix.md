@@ -384,7 +384,7 @@ as a whole.
 
 I hope that this post has inspired you to try to contribute to IntelliJ Rust (or other open-source
 project that you are using). If you have read the whole post up until this point, I salute you!
-Leave me a comment on [Reddit](TODO) if you have any remarks. And that's it for today… or not?
+Leave me a comment on [Reddit](https://www.reddit.com/r/rust/comments/ifxr99/contributing_to_the_intellijrust_plugin_a_series/) if you have any remarks. And that's it for today… or not?
 
 # Was my fix correct?
 Sometime later after the PR with my fix got merged, I stumbled upon an [issue](https://github.com/rust-lang/rustfmt/issues/3362)

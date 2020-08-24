@@ -46,7 +46,7 @@ refactoring actions.
 
 *Disclaimer*: I'm not an expert on the IntelliJ API/plugins or Rust itself. It's possible that 
 something that I write here is incorrect or incomplete. If you find something like that, please let
-me know on [Reddit](TODO)!
+me know on [Reddit](https://www.reddit.com/r/rust/comments/ifxr99/contributing_to_the_intellijrust_plugin_a_series/)!
 
 # Prerequisites
 There are some prerequisites for this series that are out-of-scope for me to describe in detail:
@@ -151,4 +151,4 @@ plugin when we will need them for a specific feature.
 Now you should have a working development environment set up so that you can modify the plugin,
 build and test the plugin. In the [next post]({% post_url 2020-08-23-contributing-1-nest-use-fix %}), we will actually implement something and fix a simple :bug:.
 
-You can comment on this post on [Reddit](TODO).
+You can comment on this post on [Reddit](https://www.reddit.com/r/rust/comments/ifxr99/contributing_to_the_intellijrust_plugin_a_series/).
