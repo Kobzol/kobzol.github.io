@@ -115,6 +115,9 @@ by glancing over the existing tests, I realized that the IntelliJ Rust plugin us
 So I searched (`Ctrl + Shift + F` in IDEA) for `NestUseStatementsIntentionTest`
 and found it in `src/test/kotlin/org/rust/ide/intentions/NestUseStatementsIntentionTest.kt`.
 
+**Edit**: matklad [pointed out](https://www.reddit.com/r/rust/comments/ifxr99/contributing_to_the_intellijrust_plugin_a_series/g2s1v5e/?utm_source=reddit&utm_medium=web2x&context=3)
+to me that there is a dedicated shortcut for finding or creating a test from a given class - `Ctrl + Shift + T`. Thanks!
+
 [^3]: As described [here](https://matklad.github.io/2018/06/18/a-trick-for-test-maintenance.html) by matklad, one of the previous maintainers of the plugin, who now works on [Rust Analyzer](https://rust-analyzer.github.io/).
 
 > Sticking to TDD with automated tests is a really good idea while working on IntelliJ plugins, as it is
