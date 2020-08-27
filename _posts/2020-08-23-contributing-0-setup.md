@@ -41,7 +41,6 @@ to sending a pull request. In later posts I want to explain more complicated thi
 creating new intentions, inspections or annotations, tuning code formatters or even designing whole new 
 refactoring actions.
 
-- Current post: [#0 Intro & setup](#)
 - Next post: [#1 Fixing a simple bug in Nest Use intention]({% post_url 2020-08-23-contributing-1-nest-use-fix %})
 
 *Disclaimer*: I'm not an expert on the IntelliJ API/plugins or Rust itself. It's possible that 

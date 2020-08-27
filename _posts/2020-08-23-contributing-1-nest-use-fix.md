@@ -8,8 +8,7 @@ This post is part of a [series]({% post_url 2020-08-23-contributing-0-setup %}) 
 my contributions to the [IntelliJ Rust](https://github.com/intellij-rust/intellij-rust) plugin.
 
 - Previous post: [#0 Intro & setup]({% post_url 2020-08-23-contributing-0-setup %})
-- Current post: [#1 Fixing a simple bug in Nest Use intention](#)
-- Next post: [TBD]
+- Next post: [#2 Intention to substitute an associated type]({% post_url 2020-08-25-contributing-2-subst-assoc-type-int %})
 
 In this post I will go through [my very first contribution](https://github.com/intellij-rust/intellij-rust/pull/3503)
 (don't click if you want to avoid spoilers!) to the plugin. Not because
@@ -218,6 +217,7 @@ override fun invoke(project: Project, editor: Editor, ctx: Context) {
 I won't be explaining the signature of the method or its behaviour in detail, we'll talk about them
 in a later post where we will create an intention from scratch.
 
+#### Paths
 The first line seems to create something called a path. A [path](https://doc.rust-lang.org/reference/paths.html)
 in Rust is a sequence of identifiers separated by `::` which can be resolved to some named Rust element,
 for example a struct or a module.
@@ -252,7 +252,8 @@ private fun makeGroupedPath(basePath: String, useSpecks: List<RsUseSpeck>): Stri
 The method receives some initial path and a list of `RsUseSpeck`s and returns
 a string. So, what is a `RsUseSpeck`? To explain that, we will first have to talk about the way
 IntelliJ represents parsed source code.
- 
+
+#### PSI
 After IntelliJ parses source code, it is represented with a so-called *[Program Structure Interface](https://jetbrains.org/intellij/sdk/docs/basics/architectural_overview/psi.html)
 (PSI) tree*, which is a fancy name for an enhanced AST. Rust code is parsed by the plugin into a tree of
 PSI nodes that all inherit from a base `PsiElement` class. There are tens of various Rust elements
