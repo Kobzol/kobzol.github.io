@@ -652,4 +652,4 @@ it took about a month until the PR was merged, as sometimes it takes time for th
 bandwidth for reviewing. So have patience and do not despair!
 
 If you're reading this, thanks for sticking with me up until the end of this post. If you have any
-comments, let me know on [Reddit](TODO).
+comments, let me know on [Reddit](https://www.reddit.com/r/rust/comments/ihkwfc/contributing_to_the_intellijrust_plugin_writing/).
