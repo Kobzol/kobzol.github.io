@@ -1,0 +1,3 @@
+$(function() {
+    $(".gif").gifplayer();
+});
