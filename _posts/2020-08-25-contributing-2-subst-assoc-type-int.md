@@ -8,7 +8,7 @@ This post is part of a [series]({% post_url 2020-08-23-contributing-0-setup %}) 
 my contributions to the [IntelliJ Rust](https://github.com/intellij-rust/intellij-rust) plugin.
 
 - Previous post: [#1 Fixing a simple bug in Nest Use intention]({% post_url 2020-08-23-contributing-1-nest-use-fix %})
-- Next post: [TBD]
+- Next post: [#3 Quick fix to attach file to a module]({% post_url 2020-09-04-contributing-3-quick-fix-attach-file-to-mod %})
 
 In this post we'll build a complete intention from scratch, based on one of my recent PRs.
 It will be a relatively simple intention because there are a lot of concepts that need to be explained
@@ -166,6 +166,8 @@ Now we just have to provide some short text describing what our intention does a
 I used the code from the original issue for the templates.
 
 > If we forgot to include a description or a template, CI tests would later loudly complain about their absence.
+> **EDIT**: turns out that this wasn't the case, as the tests for missing intention descriptions were.. well, missing :smile:.
+> But this is now resolved since [this PR](https://github.com/intellij-rust/intellij-rust/pull/6042) got merged.
 
 Now that we have an intention skeleton and its description, let's write the first test for it!
 
@@ -565,6 +567,10 @@ This also doesn't work properly, as it should generate `Vec<u32>` :disappointed:
 However, I will not show how to implement support for this case, because I only found
 about it while writing this blog post and I have yet to send another PR to fix this :sweat_smile:. Also
 this post is already pretty long -- but don't worry, we're almost at the end!
+
+**Edit**: it turned out that there are [multiple issues](https://github.com/intellij-rust/intellij-rust/pull/6032)
+with this intention being applied to type aliases (mainly because of generics). So for now I have enabled it
+only for associated types.
 
 We should also add some tests that check that the intention is not offered on places where it shouldn't be.
 Does that mean that we should add a test for each possible Rust element that does not resolve to an associated type?
