@@ -887,6 +887,6 @@ corner cases and smooth out rough edges.
 
 This post was again pretty long and I couldn't explain the refactoring fully step-by-step, since a
 lot of the code was copied from existing refactorings. So if you're reading this, thanks for sticking
-with me up until the end of this post! If you have any comments, let me know on [Reddit](TODO).
+with me up until the end of this post! If you have any comments, let me know on [Reddit](https://www.reddit.com/r/rust/comments/jgq9zk/contributing_to_the_intellijrust_plugin_introduce/).
 
 # Footnotes
