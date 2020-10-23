@@ -418,3 +418,5 @@ it a success.
 **Fun fact**: because `rustfmt` tries to be perfect (and in its case I think it actually should be), it didn't
 stabilize the `merge_imports` feature to this day, amongst other things because of this single semantics
 changing transformation.
+
+# Footnotes

@@ -313,8 +313,8 @@ For example in `std:/*caret*/:vec::Vec<u32>`, the `element` would be `::`, a sim
 of the path that we want to resolve.
 
 > Paths are represented hierarchically; in `std::vec::Vec`: `std` is actually a path that is a child
-of the `std::vec` path, which is a child of `std::vec::Vec` path, etc. We will see this in action in future
-posts, but it's not important for now.
+> of the `std::vec` path, which is a child of `std::vec::Vec` path, etc. We will see this in action in future
+> posts, but it's not important for now.
 
 Luckily, the IntelliJ PSI offers a large set of APIs for navigating the PSI tree. You can use them to
 search for a parent of a specific PSI type:
@@ -659,3 +659,5 @@ bandwidth for reviewing. So have patience and do not despair!
 
 If you're reading this, thanks for sticking with me up until the end of this post. If you have any
 comments, let me know on [Reddit](https://www.reddit.com/r/rust/comments/ihkwfc/contributing_to_the_intellijrust_plugin_writing/).
+
+# Footnotes

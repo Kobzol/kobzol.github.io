@@ -91,6 +91,12 @@ by the IntelliJ documentation.
 $ sudo apt-get install git openjdk-8-jdk
 ```
 
+**EDIT**: Since [recently](https://github.com/intellij-rust/intellij-rust/pull/6153), the plugin has
+switched to **JDK** 11:
+```bash
+$ sudo apt-get install openjdk-11-jdk
+```
+
 *[JDK]: Java Development Kit
 
 Hopefully, JDK and git should be the only dependencies that we need, the rest will be handled by the

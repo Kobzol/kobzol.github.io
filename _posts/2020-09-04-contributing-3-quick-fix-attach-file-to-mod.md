@@ -8,7 +8,7 @@ This post is part of a [series]({% post_url 2020-08-23-contributing-0-setup %}) 
 my contributions to the [IntelliJ Rust](https://github.com/intellij-rust/intellij-rust) plugin.
 
 - Previous post: [#2 Intention to substitute an associated type]({% post_url 2020-08-25-contributing-2-subst-assoc-type-int %})
-- Next post: [TBD]
+- Next post: [#4 Introduce constant refactoring]({% post_url 2020-10-19-contributing-4-introduce-constant-refactoring %})
 
 In this post we'll improve an inspection that checks whether a Rust file is included in the
 module hierarchy of the current crate. More specifically, we will implement a quick fix that will attach
@@ -802,3 +802,5 @@ these fixes in the text of this post.
 
 If you're reading this, thanks for sticking with me up until the end of this post. If you have any
 comments, let me know on [Reddit](https://www.reddit.com/r/rust/comments/inpsiq/contributing_to_the_intellijrust_plugin_quick_fix/).
+
+# Footnotes
