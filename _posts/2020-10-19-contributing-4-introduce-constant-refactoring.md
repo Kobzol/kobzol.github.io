@@ -8,7 +8,7 @@ This post is part of a [series]({% post_url 2020-08-23-contributing-0-setup %}) 
 my contributions to the [IntelliJ Rust](https://github.com/intellij-rust/intellij-rust) plugin.
 
 - Previous post: [#3 Quick fix to attach file to a module]({% post_url 2020-09-04-contributing-3-quick-fix-attach-file-to-mod %})
-- Next post: [TBD]
+- Next post: [#5 Lint attribute completion]({% post_url 2020-10-26-contributing-5-lint-attribute-completion %})
 
 In this post we'll take a look at the holy grail of IDEs: automated refactoring. We will implement a
 refactoring action that allows you to extract (or "introduce") a constant from an expression, and then

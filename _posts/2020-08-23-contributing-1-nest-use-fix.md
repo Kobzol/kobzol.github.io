@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Contributing to Intellij-Rust #1: Fixing bug in Nest Use intention"
+title:  "Contributing to Intellij-Rust #1: Fixing a bug in Nest Use intention"
 date:   2020-07-31 15:21:35 +0200
 categories: rust intellij
 --- 
