@@ -854,6 +854,6 @@ due to some well-deserved refactoring and the automatic lint generation, which w
 purely in Kotlin and not in Python. It took a few months to merge it.
 
 If you're reading this, thanks for sticking with me until the end of this post. If you have any
-comments, let me know on [Reddit](TODO).
+comments, let me know on [Reddit](https://www.reddit.com/r/rust/comments/jkcz4w/contributing_to_intellijrust_5_lint_attribute/).
 
 # Footnotes
