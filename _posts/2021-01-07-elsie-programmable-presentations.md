@@ -113,11 +113,13 @@ as it lets me do things that simply wouldn't be possible (or would be much more 
 other (WYSIWYG or declarative) tools.
 
 I'll now try to present some use-cases to demonstrate why it might be a good idea to create slides
-programmatically. I will be showing some code snippets with *Elsie* code, but they will mostly
-serve as pseudocode to demonstrate why slide programmability can help. Therefore, if you know
-basics of Python, you should understand them even if you don't know the *Elsie* API. Try to think
-about how easy or difficult it would be to achieve these use-cases in your favourite slide making
-tool.
+programmatically. I will be showing some Python code snippets using *Elsie*, but they will mostly
+serve as pseudocode to demonstrate why slide programmability can be useful. Therefore, if you know
+basics of Python, you should be fine even if you don't know the *Elsie* API.
+
+To be clear, I'm not claiming that the following use-cases are impossible in declarative or WYSIWYG
+tools. Just try to think about how difficult it would be to achieve them in your favourite slide
+making tool.
 
 ## Avoiding repetitive tasks
 Programming is incredibly useful for making repetitive tasks easier, and this also applies to
@@ -125,12 +127,16 @@ making presentations. Here are some examples of situations where programmability
 doing tasks manually or e.g. copy-pasting things all over your presentation.
 
 ### Changing style quickly
-Say that you want to change the font (or its size, color, etc.) of all the text boxes in your
-presentation, to see what style looks best. Or worse, right before your presentation, you realize
-that the projector's aspect ratio (`4:3`/`16:9`) or the room's lightning conditions (light/dark) do
-not match your slides, and you need to change it ASAP. This is especially annoying to do in WYSIWYG
-tools, where you often need to resort to going through each slide one by one and painfully changing
-the desired style by hand.
+Say that you want to quickly change the font (or its size, color, etc.) of all the text boxes in
+your presentation, to see what style looks best. Or you might want to change the style of a
+specific category of text boxes (e.g. all footnotes or headings). Or worse, right before your
+presentation, you realize that the projector's aspect ratio (`4:3`/`16:9`) or the room's lightning
+conditions (light/dark) do not match your slides, and you have to change the style ASAP.
+
+Declarative tools can handle these changes relatively easily. WYSIWYG editors too, to a certain
+extent, but it requires a lot of discipline by the user to e.g. use shared styles (if the tool
+supports them). If you are not disciplined, you will need to resort to going through each slide one
+by one and painfully changing the desired style by hand.
 
 With programmable slides, the default font size, color theme, slide dimensions, etc. can simply be
 variables, which are then used by the rest of the code that creates the slides. In that case, if
