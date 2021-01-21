@@ -60,7 +60,7 @@ ideal for anything complex.
 
 I couldn't find any other tools for creating slides programmatically (other than some other
 libraries for creating PowerPoint slides). If you know of any other such tools, please let me know
-on [Reddit](TODO)!
+on [Reddit](https://www.reddit.com/r/Python/comments/l1ypzt/elsie_python_library_for_creating_slides/)!
 
 ## Elsie
 A few years ago, [one](https://github.com/spirali) of my colleagues was frustrated of having to
@@ -292,4 +292,4 @@ to make programmable slides with technical content, it is also my favourite slid
 
 So, if you know Python, but you're still creating slides manually, check
 out [Elsie](https://spirali.github.io/elsie/) to level-up your slide-fu. And let me know what you
-think about programmable presentations on [Reddit](TODO).
+think about programmable presentations on [Reddit](https://www.reddit.com/r/Python/comments/l1ypzt/elsie_python_library_for_creating_slides/).

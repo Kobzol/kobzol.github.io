@@ -96,7 +96,7 @@ presentations.
 
 Note that the list of strengths and weakness is quite opinionated and biased :)
 It is also possible that I have missed some popular alternatives, so if you know of any other
-software tools for creating (technically-oriented) slides, please let me know on [Reddit](TODO)!
+software tools for creating (technically-oriented) slides, please let me know on [Reddit](https://www.reddit.com/r/Python/comments/l1ypzt/elsie_python_library_for_creating_slides/)!
 
 ### PowerPoint-like tools
 I'm putting tools such as PowerPoint, Google Slides, Impress, Prezi,… into a single category,
