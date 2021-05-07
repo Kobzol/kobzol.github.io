@@ -207,7 +207,7 @@ actually have a "hidden" dependency on a fundamental C library, which often time
 Anyway, that's all for my adventure. I wrote about it because I hope that it might be useful to some
 of you in the future. You can find the final workflow file that I have used for building the binary
 [here](https://github.com/It4innovations/hyperqueue/blob/498a162e9f17506bfe4a274f7afe2773bb25c0ee/.github/workflows/release.yml).
-If you have any comments, let me know on [Reddit](TODO).
+If you have any comments, let me know on [Reddit](https://www.reddit.com/r/rust/comments/n6udyk/building_rust_binaries_in_ci_that_work_with_older/).
 
 P.S.: If you find yourself debugging GitHub Actions frequently, check [act](https://github.com/nektos/act).
 It allows you to run your GitHub workflows locally, which can speed up the time spent debugging them
