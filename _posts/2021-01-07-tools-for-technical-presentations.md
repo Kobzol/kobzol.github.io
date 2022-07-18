@@ -134,7 +134,7 @@ modify them one by one, which is exhausting.
   and it also has advanced formatting, editing and spellchecking features, so you get a lot of
   things built-in. Yet placement and alignment is not automated as well as I would like.
 - `Low-level control` :thumbsdown: While you can place things pretty much where you want, you need
-  to do it manually ba hand, and creating complex animated diagrams is very time-consuming.
+  to do it manually by hand, and creating complex animated diagrams is very time-consuming.
 - `Math symbols and equations` :man_shrugging: PowerPoint has support for rendering equations, but
   it's a bit cumbersome and not really on the level of TeX.
 - `Source control` :thumbsdown: Not really possible using `git`. These tools support various forms
