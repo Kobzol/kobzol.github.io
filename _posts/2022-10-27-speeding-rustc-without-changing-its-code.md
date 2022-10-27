@@ -523,4 +523,4 @@ into the Rust performance suite, so that we could not only measure the compilati
 but also the performance of Rust programs compiled by it. But more on that later :)
 
 Anyway, that's all for now. If you have any ideas how to speed up `rustc` (but rememember, without
-changing its source code! :laughing:) or any other comments, let me know on [Reddit](TODO).
+changing its source code! :laughing:) or any other comments, let me know on [Reddit](https://www.reddit.com/r/rust/comments/yeunrs/speeding_up_the_rust_compiler_without_changing/).
