@@ -249,6 +249,12 @@ def handle_pattern_matching(packet: Packet):
 Sadly, here we have to (or rather, should) include the annoying `assert False` branches so that the function crashes
 when it receives unexpected data. In Rust, this would be a compile-time error instead.
 
+> Note: Several people on Reddit have reminded me that `assert False` is actually optimized away completely
+> in optimized build (`python -O ...`). Thus it would be safer to raise an exception directly.
+> There is also [`typing.assert_never`](https://docs.python.org/3/library/typing.html#typing.assert_never)
+> from Python 3.11, which explicitly tells a type checker that falling to this branch should be a "compile-time"
+> error.
+
 A nice property of the union type is that it is defined outside the class that is part of the union.
 The class therefore does not know that it is being included in the union, which reduces coupling in code.
 And you can even create multiple different unions using the same type:
@@ -547,6 +553,21 @@ class DenormalizedBBox(BBoxBase):
 ```
 With this interface, I can have the best of both worlds -- separated types for correctness, and a unified interface
 for ergonomics.
+
+Note: If you want to add some shared methods to the parent/base class that return an instance of the corresponding class,
+you can use `typing.Self` from Python 3.11:
+
+```python
+class BBoxBase:
+  def move(self, x: float, y: float) -> typing.Self: ...
+
+class NormalizedBBox(BBoxBase):
+  ...
+
+bbox = NormalizedBBox(...)
+# The type of `bbox2` is `NormalizedBBox`, not just `BBoxBase`
+bbox2 = bbox.move(1, 2)
+```
 
 #### Safer mutexes
 Mutexes and locks in Rust are usually provided behind a very nice interface with two benefits:
