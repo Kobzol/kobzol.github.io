@@ -645,4 +645,5 @@ But unless you're behaving adversarially, this makes the mutex interface in Pyth
 use.
 
 Anyway, I'm sure that there are more "soundness patterns" that I use in my Python code, but that's all I can think
-of at the moment. If you have some examples of similar ideas or any other comments, let me know on [Reddit](TODO).
+of at the moment. If you have some examples of similar ideas or any other comments, let me know on
+[Reddit](https://www.reddit.com/r/rust/comments/13mxu2r/writing_python_like_its_rust/).
