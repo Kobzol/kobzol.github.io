@@ -363,7 +363,7 @@ or with some metrics (`Speed` vs `Length` vs `Temperature` etc.) that should not
 One thing that I quite like about Rust is that it doesn't have constructors *per se*. Instead, 
 people tend to use normal functions to create (ideally properly initialized) instances of 
 structs. In Python, there is no constructor overloading, therefore if you need to construct an object
-in multiple ways, someone this leads to an `__init__` method that has a lot of parameters which serve
+in multiple ways, sometimes this leads to an `__init__` method that has a lot of parameters which serve
 for initialization in different ways, and which cannot really be used together.
 
 Instead, I like to create "construction" functions with an explicit name that makes it obvious how to
