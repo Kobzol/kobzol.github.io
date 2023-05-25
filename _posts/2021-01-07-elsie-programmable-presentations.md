@@ -67,7 +67,7 @@ A few years ago, [one](https://github.com/spirali) of my colleagues was frustrat
 deal with the
 [existing solutions]({% post_url 2021-01-07-tools-for-technical-presentations %}#existing-tools)
 for creating slides with a lot of technical content (code snippets, complex diagrams and
-animations, math symbols etc.). He decided to solve this problem by
+animations, math symbols etc.). She decided to solve this problem by
 creating [`Elsie`](https://spirali.github.io/elsie/), a Python library which allows the user to
 **create slides programmatically**. It provides basic building blocks (such as text blocks, images,
 code snippets, shapes, lists, etc.) that can be combined to create slides. Internally, it
