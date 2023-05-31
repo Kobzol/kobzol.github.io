@@ -153,6 +153,10 @@ to execute the program at all. For some simple refactorings (e.g. attribute rena
 these changes for me. In addition, with explicitly named types, I can build a vocabulary of terms (`Person`, `City`)
 that I can then share with other functions and classes.
 
+> There are other ways of typing objects with fields. For example
+> [`TypedDict`](https://docs.python.org/3/library/typing.html#typing.TypedDict)
+> or [`NamedTuple`](https://docs.python.org/3/library/typing.html#typing.NamedTuple).
+
 # Algebraic data types
 The one thing from Rust that I probably lack the most in most mainstream languages are algebraic data
 types (ADTs)[^2]. It is an incredibly powerful tool to explicitly describe the shapes of data
