@@ -239,5 +239,5 @@ of increased build time - you need to recompile and run your program several tim
 There's probably more to say about both PGO and BOLT, but this post was mainly supposed to serve as a short
 intro into how to use these techniques with Rust, and how to leverage `cargo-pgo` to make this simpler,
 and I think that it has achieved that goal.
-Let me know on [Reddit](TODO) or on the `cargo-pgo` [issue tracker](https://github.com/Kobzol/cargo-pgo/issues)
+Let me know on [Reddit](https://www.reddit.com/r/rust/comments/15bwihd/optimizing_rust_programs_with_pgo_and_bolt_using/?sort=new) or on the `cargo-pgo` [issue tracker](https://github.com/Kobzol/cargo-pgo/issues)
 if you have any questions regarding the usage of PGO/BOLT for Rust crates.
