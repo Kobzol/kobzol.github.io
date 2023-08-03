@@ -686,4 +686,4 @@ rewarded by an invitation to the Rust [infra team](https://www.rust-lang.org/gov
 :tada:, which makes me quite happy :)
 
 In a follow-up post, I will describe my work on the recently introduced runtime benchmarks. If you have
-any comments or questions, let me know on [Reddit](TODO).
+any comments or questions, let me know on [Reddit](https://www.reddit.com/r/rust/comments/15hbefw/how_to_improve_rust_compilers_ci_in_2023/).
