@@ -505,7 +505,10 @@ other similar cases in the existing CI pipelines and eventually merged several o
 [#112779](https://github.com/rust-lang/rust/pull/112779).
 
 For the `x86_64-msvc` CI pipeline shown above, its (combined) duration was reduced from ~7000s to
-~4500s, and the other merged pipelines had similar results.
+~4500s, and the other merged pipelines had similar results. Here is a chart of the combined job (`x86_64-msvc`),
+together with the two previous split jobs, for comparison:
+
+![Chart displaying the duration of the merged Windows CI job](/assets/posts/ci-2023/chart-msvc-combined.png)
 
 #### Avoiding unnecessary work
 One of the benefits of having data from an analysis is that you can share it with others and then
