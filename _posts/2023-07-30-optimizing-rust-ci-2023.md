@@ -413,6 +413,13 @@ versions of the instrumentation machinery running within a single process.
   broke PGO. Resolving this ([#114344](https://github.com/rust-lang/rust/pull/114344)) should hopefully
   remove these regressions. It is, however, yet another point of evidence that mixing two slightly
   different instrumentation runtimes will probably not be possible.
+- The Rust compiler uses the [`jemalloc`](https://jemalloc.net/) allocator on Linux, using the
+  [`tikv-jemallocator`](https://crates.io/crates/tikv-jemallocator) crate. We have been also experimenting
+  with other memory allocators, but so far without a big success. The [`mimalloc`](https://github.com/microsoft/mimalloc)
+  allocator looked promising, and it actually produces very [nice speedups](https://perf.rust-lang.org/compare.html?start=15d7556de9babe4c1d8f367de1b827494782bd92&end=3730639d7f06cd606b6fd0cda3eeef8e107f63e1&stat=instructions:u),
+  around 4% instruction count improvements across the board! However, it sadly also increases the
+  memory usage footprint of the compiler [by up to 30%](https://perf.rust-lang.org/compare.html?start=15d7556de9babe4c1d8f367de1b827494782bd92&end=3730639d7f06cd606b6fd0cda3eeef8e107f63e1&stat=max-rss),
+  which has been deemed unacceptable for now.
 
 #### Final timings
 To conclude this section, here is a final timing table for a recent try build:
