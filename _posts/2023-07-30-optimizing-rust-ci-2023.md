@@ -181,6 +181,22 @@ post is already quite long, and we're not even in the middle), here is the updat
 10. Optimize LLVM with BOLT.
 11. Build a final distribution archive (reuse old `rustc` and LLVM).
 
+**Edit**: I have been [asked](https://www.reddit.com/r/rust/comments/15hbefw/comment/juqa7ox/?utm_source=share&utm_medium=web2x&context=3)
+on Reddit why do we re-build and re-profile LLVM with PGO and BOLT on every merge, instead of just
+caching the optimized LLVM library (since LLVM itself is changed only very rarely, unlike `rustc`).
+We could do that in theory, and I have been planning to try it for some time (let me know if you're
+interested in trying this out! :smile:). But it's important to note that it would be a trade-off.
+Currently, we always PGO/BOLT profile and optimize LLVM according to how it's being used by the *actual*
+version of `rustc`. When `rustc` changes, its usage patterns of LLVM can also change, and thus using
+a version of LLVM optimized by an older version of `rustc` could result in less efficient optimization.
+
+That being said, I suspect that the LLVM usage patterns actually don't change all that much, so it could
+be a worthwhile thing to try. There are some additional concerns about introducing noise into benchmark
+results, because if we would be updating the LLVM build only sparingly from time to time, each such
+update could add unexpected changes to benchmark results. Now LLVM is re-optimized on each merge,
+which can also add noise, but at least it's more predictable and the changes are usually small and
+incremental.
+
 #### Build LLVM without LTO ([#113779](https://github.com/rust-lang/rust/pull/113779))
 Removing an optimization from LLVM might sound a bit scary, but don't worry, it doesn't affect the
 performance of `rustc` in any way! If you have examined the timing table printed above, you might
