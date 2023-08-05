@@ -79,7 +79,8 @@ This was a much-needed maintainability improvement. Previously, the PGO script w
 and it was a bit hard to modify and extend it, since it was already getting quite complicated. I also
 wanted to add some better monitoring of the build process, which would involve parsing JSON generated
 by the `rustc` build system (called `bootstrap`), and I definitely didn't want to implement that in bash :)
-That's why I ported the whole thing to Python in this PR.
+That's why I ported the whole thing to Python in this PR. Thanks to [`@geordi`](https://github.com/geordi)
+for helping me with the Python rewrite!
 
 This allowed me to easily add new features useful for debugging the PGO CI workflow, like observing
 file disk usage of the PGO profiles ([#107922](https://github.com/rust-lang/rust/pull/107922)) or
