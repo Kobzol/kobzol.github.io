@@ -294,4 +294,4 @@ of these performance remarks to another level.
 [^bender]: With blackjack and… (you know how it goes).
 
 If you have some hints on how to better interpret these remarks, feature suggestions for `cargo remark`
-or any comments, let me know on [Reddit](TODO) or on the crate's [issue tracker](https://github.com/Kobzol/cargo-remark/issues).
+or any comments, let me know on [Reddit](https://www.reddit.com/r/rust/comments/15p4thi/cargoremark_examine_rustc_llvm_optimization/) or on the crate's [issue tracker](https://github.com/Kobzol/cargo-remark/issues).
