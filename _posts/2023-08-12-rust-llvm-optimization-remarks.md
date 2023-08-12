@@ -273,7 +273,7 @@ more knowledge of LLVM, it can provide a useful way of examining optimizations b
 Rust code. I also see greater potential for this tool in the future (see below). It's just that at
 the current state, it hasn't really fulfilled my original expectations.
 
-If you have any hints on how to better interpret these remarks, let me know. Of crouse, I will also
+If you have any hints on how to better interpret these remarks, let me know. Of course, I will also
 be happy for any experience reports from using `cargo remark` by other Rust developers.
 
 # …a bright future?
