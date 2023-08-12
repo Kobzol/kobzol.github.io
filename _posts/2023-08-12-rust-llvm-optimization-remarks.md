@@ -5,7 +5,7 @@ date: "2023-08-12 15:00:00 +0200"
 categories: rust cargo
 ---
 
-**TL;DR**: This post describes LLVM optimizations remarks that can useful to help the compiler
+**TL;DR**: This post describes LLVM optimization remarks that can useful to help the compiler
 better optimize your programs. If you want to analyze remarks generated from compiling Rust
 programs, you can use the [cargo-remark](https://github.com/kobzol/cargo-remark) tool.
 
