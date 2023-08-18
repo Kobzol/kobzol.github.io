@@ -639,4 +639,4 @@ for monitoring its performance is a necessary component. And it seems to be payi
 year ago, the performance of the compiler has actually improved [quite a lot!](https://perf.rust-lang.org/compare.html?start=2022-08-17&end=2023-08-17&stat=instructions%3Au).
 
 If you have any comments or questions about the `rustc` benchmarking suite, or want to join our benchmarking
-efforts, let me know on [Reddit](TODO).
+efforts, let me know on [Reddit](https://www.reddit.com/r/rust/comments/15ukro3/exploring_the_rust_compiler_benchmark_suite/).
