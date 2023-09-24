@@ -523,5 +523,5 @@ is a lot of stuff to do :)
 
 # Conclusion
 If you have any comments or questions about the runtime benchmarks, or you want to suggest your
-own benchmarks to be added to the suite, let me know on [Reddit](TODO) or send a PR to
-[`rustc-perf`](https://github.com/rust-lang/rustc-perf).
+own benchmarks to be added to the suite, let me know on [Reddit](TOhttps://www.reddit.com/r/rust/comments/16qw6h4/adding_runtime_benchmarks_to_the_rust_compiler/DO)
+or send a PR to [`rustc-perf`](https://github.com/rust-lang/rustc-perf).
