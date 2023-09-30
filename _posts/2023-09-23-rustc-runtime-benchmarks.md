@@ -523,5 +523,5 @@ is a lot of stuff to do :)
 
 # Conclusion
 If you have any comments or questions about the runtime benchmarks, or you want to suggest your
-own benchmarks to be added to the suite, let me know on [Reddit](TODO) or send a PR to
+own benchmarks to be added to the suite, let me know on [Reddit](https://reddit.com/r/rust/s/rt6P4xLcSf) or send a PR to
 [`rustc-perf`](https://github.com/rust-lang/rustc-perf).
