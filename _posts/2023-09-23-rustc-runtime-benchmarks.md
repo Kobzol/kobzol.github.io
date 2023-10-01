@@ -145,7 +145,7 @@ so that we would have ultimate control of defining, executing and measuring the 
 of relying on external crates. `benchlib` uses Linux `perf` events to gather hardware metrics, using
 the [`perf-event`](https://github.com/jimblandy/perf-event) crate. I also took bits and pieces from
 other mentioned tools, like the
-[`black_box`](https://github.com/rust-lang/rustc-perf/blob/master/collector/benchlib/src/benchmark.rs#L153)
+[`black_box`](https://github.com/rust-lang/rustc-perf/blob/414230abc695bd715054d633c8203090f7423ce5/collector/benchlib/src/benchmark.rs#L161)
 function from `iai`.
 
 The next step that I had to figure out was how would the benchmarks be defined. For compilation time
