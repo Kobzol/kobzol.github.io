@@ -72,4 +72,4 @@ configuration options [here](https://jemalloc.net/jemalloc.3.html).
 
 # Conclusion
 If you have any comments or questions, or you have hints about using huge pages, please let me know
-on [Reddit](TODO).
+on [Reddit](https://www.reddit.com/r/rust/comments/17d5doy/make_the_rust_compiler_5_faster_with_this_one/).
