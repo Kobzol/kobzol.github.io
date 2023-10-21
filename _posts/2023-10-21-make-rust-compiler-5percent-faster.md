@@ -53,7 +53,7 @@ on your own. To do that, you have to:
 - Enable transparent huge pages, either with the `always` or `madvise` modes. On Ubuntu, you can do
 that with the following command:
     ```bash
-$ echo mdavise > /sys/kernel/mm/transparent_hugepage/enabled
+$ echo madvise > /sys/kernel/mm/transparent_hugepage/enabled
     ```
     Note that you might need superuser rights (`sudo`) to execute this command, and that it might also
     be reset after a restart (depending on your system, for me it was set to `madvise` by default and
