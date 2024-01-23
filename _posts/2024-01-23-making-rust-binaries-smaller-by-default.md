@@ -150,6 +150,17 @@ the proposal, which was actually surprisingly straightforward.
 The PR has been [merged](https://github.com/rust-lang/cargo/pull/13257#issuecomment-1892589315)
 a week ago, and it is now in nightly! :tada:
 
+The TLDR of the change is that Cargo will now by default use `strip = "debuginfo"` for the `release` profile,
+unless you explicitly request debuginfo some dependency:
+```toml
+[profile.release]
+# v This is now used by default, if not provided
+strip = "debuginfo"
+```
+
+In fact, this default will be used for *any* profile which does not enable debuginfo anywhere in its dependency
+chain, not just for the `release` profile.
+
 There was one unresolved concern about using `strip` on macOS, because it seems that there can be some
 [issues](https://github.com/rust-lang/cargo/issues/11641) with it. The change has been in nightly for a week and
 I haven't seen any problems, but if this will cause any issues, we can also perform the debug symbols stripping selectively,
