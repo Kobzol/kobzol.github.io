@@ -160,4 +160,4 @@ In the end, this was yet another case of "if you want it done, just do it", whic
 I'm glad the change went through, and I hope that we won't find any major issues with it and that it will be stabilized
 in the upcoming months.
 
-If you have any comments or questions, please let me know on [Reddit](TODO).
+If you have any comments or questions, please let me know on [Reddit](https://www.reddit.com/r/rust/comments/19dwxel/making_rust_binaries_smaller_by_default/).
