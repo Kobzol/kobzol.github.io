@@ -284,4 +284,4 @@ very interested in what you could find :)
 Anyway, I wrote this post in a haste (it took ~1.5 hours to read boats' blog, implement the code and
 write this post :laughing:), and it was just a fun experiment, so don't take it too seriously :)
 
-If you have any comments or questions, please let me know on [Reddit](TODO).
+If you have any comments or questions, please let me know on [Reddit](https://www.reddit.com/r/rust/comments/185ew5z/examining_rust_async_iterator_approaches/).
