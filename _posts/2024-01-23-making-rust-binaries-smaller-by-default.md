@@ -64,6 +64,9 @@ This actually contradicts Cargo's [own documentation](https://doc.rust-lang.org/
 which claims that if you use `debug = 0` (which is the default for release builds), the resulting binary will not contain
 any debug symbols. But this is clearly not what happens now.
 
+EDIT: Just to clarify, Cargo was putting the debuginfo of the Rust standard library into your program by default.
+It was *not* including the debuginfo of your own crate in release mode by default.
+
 # Why is it a problem?
 If you take a look at the binary size of a Rust helloworld program compiled in release mode on Linux, you'll
 notice that it has about ~4.3 MiB[^rustc-version]. While it's true that we have a lot more disk space
