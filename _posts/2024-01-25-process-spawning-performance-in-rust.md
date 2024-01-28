@@ -213,4 +213,4 @@ The difference is not large, but it is there. Why? When you specify an absolute 
 # Conclusion
 I hope that you have learned something new about process spawning on Linux using Rust. Even though I think that the presented bottlenecks won't cause any issues for the vast majority of Rust programs, if you'll ever need to spawn a gigantic amount of processes in a short time, perhaps this blog post could serve as a reference on what to watch out for.
 
-I'm pretty sure that it would be possible to dive much deeper into this complex topic, but I already spent enough time on it, at least for now. If you have any comments or questions, please let me know on [Reddit](TODO).
+I'm pretty sure that it would be possible to dive much deeper into this complex topic, but I already spent enough time on it, at least for now. If you have any comments or questions, please let me know on [Reddit](https://www.reddit.com/r/rust/comments/1ad61t7/process_spawning_performance_in_rust/).
