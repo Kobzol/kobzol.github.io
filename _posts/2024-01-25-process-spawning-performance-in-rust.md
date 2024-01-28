@@ -130,6 +130,11 @@ Sure enough, it's again much slower on the cluster. And if we peek inside with `
 
 Ok, so at this point I knew that some of the slowdown is obviously caused by the usage of `fork` (and some of it is probably also introduced by the Unix sockets, but I didn't want to deal with that). I saw that even on the cluster, I can achieve much better performance, but I would need to avoid the `fork` slow path in the Rust standard library and also add the `POSIX_SPAWN_USEVFORK` flag to its `posix_spawnp` call.
 
+By the way, there is also another common solution to this problem, to use a ["zygote"](https://stackoverflow.com/questions/9153166/understanding-android-zygote-and-dalvikvm) process with small RSS, which is
+forked repeatedly to avoid the page table copying overhead. But it doesn't seem like it would help here,
+because in Rust, even the small benchmark program with small RSS was quite slow to `fork` using the
+slow path approach. Perhaps the overhead lies in the UDS sockets, or something else.
+
 # Should we use `vfork`?
 After I learned about the source of the bottleneck, I created an [issue](https://github.com/rust-lang/rust/issues/87764) about it in the Rust issue tracker[^gh-issue]. This led me to investigate how other languages deal with this issue. We already saw that Python uses the slow method with older `glibc`. I found out that Go (which AFAIK actually doesn't use `glibc` on Linux and basically implements syscalls from scratch) switched to the `vfork` method in `1.9`, which produced some nice wins in [production](https://about.gitlab.com/blog/2018/01/23/how-a-fix-in-go-19-sped-up-our-gitaly-service-by-30x/).
 
