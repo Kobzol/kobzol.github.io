@@ -1,7 +1,7 @@
 ---
 layout: "post"
 title: "Process spawning performance in Rust"
-date: "2024-01-25 15:13:00 +0100"
+date: "2024-01-28 17:08:00 +0100"
 categories: rust
 ---
 
