@@ -27,4 +27,4 @@ But there's also another way to look at this: **The compilation itself is a part
 
 Of course, this is not a new revelation by any means, as one of biggest cited advantages of Rust is that it helps with [shifting left](https://en.wikipedia.org/wiki/Shift-left_testing), i.e. moving many bugs from production (runtime) to development (compile time), and thus reducing the cost to fix said bugs. You could say that all languages that are statically typed and have a reasonable type system provide the same benefit. However, I would say that thanks to enums, pattern matching, ownership, [destructive move semantics](https://www.thecodedmessage.com/posts/cpp-move/), lifetimes and other features, Rust "executes many more tests" during compilation than any other "mainstream" programming language, so to speak.
 
-Well, that's all that I wanted to express in this post. If you have any comments or thoughts, please let me know on [Reddit](TODO).
+Well, that's all that I wanted to express in this post. If you have any comments or thoughts, please let me know on [Reddit](https://www.reddit.com/r/rust/comments/1aiscx5/compiling_rust_is_testing/).
