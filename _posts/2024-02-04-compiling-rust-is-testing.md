@@ -5,6 +5,8 @@ date: "2024-02-04 16:13:00 +0100"
 categories: rust
 ---
 
+> Edit: it looks like some people misunderstood what I wanted to express with this post. So, to avoid further confusion, pretty much the only thing that I wanted to say here was this: I know that waiting for a Rust program to compile sucks, but we should not forget all the benefits that this compilation process brings us in return. (Yes, this post could have been a tweet).
+
 This post is a very short contemplation of Rust compilation (times). Don't expect anything super insightful, just a bunch of thoughts that came up while I was listening to the [Rustacean Station](https://rustacean-station.org/episode/cliff-crosland/) podcast.
 
 I'm currently analysing the results of the [Rust 2023 annual survey](https://blog.rust-lang.org/2023/12/18/survey-launch.html) (full results coming Soon™, hopefully sometime in February) and as usually, one of the most common complaints is long compilation time of Rust programs. This is certainly not a surprise, of course, as compilation times are often being cited as one of the biggest frustrations that people have with Rust.
