@@ -50,4 +50,4 @@ Currently, `cargo-wizard` is mostly focused on performance configuration options
 # Conclusion
 I hope that you will find `cargo-wizard` useful and that it will help you to quickly configure your Cargo projects so that you can avoid having to keep all the useful options in your head. If you find bugs or want to suggest new features, please let me know in the [issue tracker](https://github.com/kobzol/cargo-wizard/issues). Pull requests are, of course, also welcome :)
 
-If you have any comments or questions about this blog post or `cargo-wizard`, you can also let me know on [Reddit](TODO).
+If you have any comments or questions about this blog post or `cargo-wizard`, you can also let me know on [Reddit](https://www.reddit.com/r/rust/comments/1bbcdzs/cargowizard_configure_your_cargo_project_for_max/).
