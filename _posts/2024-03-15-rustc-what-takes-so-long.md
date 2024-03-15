@@ -171,4 +171,4 @@ Now, if you don't want to think about these things, and you just want to get the
 you can try my [`cargo-wizard`](https://github.com/Kobzol/cargo-wizard) tool, and use the `fast-compile` profile (if you're not shy of using the `nightly` compiler, try it with the `--nightly` flag, to enable more optimizations).
 
 And that's all. If you'd like to examine the measured data, or run the experiment yourself, you can find my scripts
-[here](https://github.com/Kobzol/rustc-perf/tree/section-analysis/analysis). And if you have any comments or questions, you can let me know on [Reddit](TODO).
+[here](https://github.com/Kobzol/rustc-perf/tree/section-analysis/analysis). And if you have any comments or questions, you can let me know on [Reddit](https://www.reddit.com/r/rust/comments/1bfr77s/what_part_of_rust_compilation_is_the_bottleneck/).
