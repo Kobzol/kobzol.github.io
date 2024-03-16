@@ -149,6 +149,8 @@ Rust code, so at least for me, the binary case is much more interesting. That is
 the backend and the linker are the things that could be improved the most. :crossed_fingers: for the
 [Cranelift backend](https://github.com/rust-lang/rustc_codegen_cranelift) and the usage of the `lld` linker by [default](https://github.com/rust-lang/rust/issues/71515) in the future!
 
+**EDIT**: After writing the post and having some discussions on Reddit, I realized that the binary vs library distinction here is a bit misleading. What is actually important is if you are producing a linkable artifact (e.g. `.exe` or `.so`). Because if you just build an intermediate artifact (like an `.rlib`, which is what your crate dependencies compile into), that won't compile `#[inline]`-d and generic functions, and also the linker won't be involved. So a lot of the compilation costs will be actually deferred to the final artifact that needs to also monomorphize and compile inlined and generic functions, and also needs to perform linking. In many cases, the final artifact is indeed a binary, but it can also be e.g. a dynamic library object (`.so` or `.dll`), although this is not so common with Rust due to it not having a stable ABI.
+
 # What to do with this information?
 To be honest, probably not that much. The section computation and the charts that I have shown here were created by a bunch of heuristics and ad-hoc scripts, and (AFAIK), `rustc` doesn't compute this breakdown on its own. It would be cool if Cargo would be able to show you some summary of the bottlenecks that slow down the compilation of your crate(s), and guide you towards approaches that could reduce them, like this:
 
