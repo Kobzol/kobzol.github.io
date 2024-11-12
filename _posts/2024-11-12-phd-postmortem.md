@@ -2,7 +2,7 @@
 layout: "post"
 title: "PhD postmortem"
 date: "2024-11-12 23:00:00 +0100"
-categories: phd
+categories: research
 ---
 
 I haven't been blogging for the past ~eight months, because I was quite busy finishing my [PhD 
