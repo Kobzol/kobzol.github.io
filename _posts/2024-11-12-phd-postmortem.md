@@ -42,8 +42,8 @@ introductory *C* programming course, prepared hundreds of homework and test assi
 create or modernize *C*, Python, *C++* and machine learning courses, contributed to and propagated 
 the usage of an online [code submission tool](https://github.com/mrlvsb/kelvin) to facilitate code reviews of student submissions, spent countless
 hours on Matrix and Discord helping students with their programming assignments[^wife-quote] and 
-even designed a completely new subject (it's about [Rust](https://github.
-com/Kobzol/rust-course-fei), of course :smile:). In general, I was trying to motivate students 
+even designed a completely new subject (it's about [Rust](https://github.com/Kobzol/rust-course-fei), of course :smile:).
+In general, I was trying to motivate students 
 to improve their skills by practicing coding on lots and lots and lots of programming exercises 
 that I have prepared for them, and also to think about the way they design their programs and 
 consider their trade-offs. I found this very rewarding and enjoyable, and learned a lot during 
