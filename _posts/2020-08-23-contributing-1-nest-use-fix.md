@@ -3,6 +3,7 @@ layout: post
 title:  "Contributing to Intellij-Rust #1: Fixing a bug in Nest Use intention"
 date:   2020-07-31 15:21:35 +0200
 categories: rust intellij
+reddit_link: https://www.reddit.com/r/rust/comments/ifxr99/contributing_to_the_intellijrust_plugin_a_series/
 --- 
 This post is part of a [series]({% post_url 2020-08-23-contributing-0-setup %}) in which I describe
 my contributions to the [IntelliJ Rust](https://github.com/intellij-rust/intellij-rust) plugin.

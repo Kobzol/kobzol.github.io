@@ -3,6 +3,7 @@ layout: "post"
 title: "How to improve Rust compiler's CI in 2023"
 date: "2023-07-30 14:42:00 +0200"
 categories: rust rustc
+reddit_link: https://www.reddit.com/r/rust/comments/15hbefw/how_to_improve_rust_compilers_ci_in_2023/
 ---
 
 During the first half of 2023, I have continued my quest for optimizing the build, test and performance

@@ -3,6 +3,7 @@ layout: "post"
 title: "Rust exercises from my university course"
 date: "2024-12-18 20:00:00 +0100"
 categories: teaching
+reddit_link: https://www.reddit.com/r/rust/comments/1hgytpx/rust_university_course_exercises/
 ---
 
 I'm still recovering from the most [hectic semester]({% post_url 2024-11-12-phd-postmortem %}) of my life[^so-far],

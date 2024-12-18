@@ -3,6 +3,7 @@ layout: "post"
 title: "Optimizing Rust programs with PGO and BOLT using cargo-pgo"
 date: "2023-07-28 14:42:00 +0200"
 categories: rust cargo
+reddit_link: https://www.reddit.com/r/rust/comments/15bwihd/optimizing_rust_programs_with_pgo_and_bolt_using/
 ---
 
 Last year I was working on [improving]({% post_url 2022-10-27-speeding-rustc-without-changing-its-code %})

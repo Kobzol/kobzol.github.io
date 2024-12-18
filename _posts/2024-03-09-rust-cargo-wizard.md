@@ -3,6 +3,7 @@ layout: "post"
 title: "Automating Cargo project configuration using cargo-wizard"
 date: "2024-03-10 16:00:00 +0100"
 categories: rust cargo
+reddit_link: https://www.reddit.com/r/rust/comments/1bbcdzs/cargowizard_configure_your_cargo_project_for_max/
 ---
 
 **TL;DR**: I created a Cargo subcommand called [`cargo-wizard`](https://github.com/kobzol/cargo-wizard) that simplifies the configuration of Cargo projects for maximum runtime performance, fastest compilation time or minimal binary size.

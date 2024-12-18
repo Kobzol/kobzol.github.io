@@ -3,6 +3,7 @@ layout: post
 title:  "Contributing to Intellij-Rust #3: Quick fix to attach file to a module"
 date:   2020-09-04 18:07:00 +0200
 categories: rust intellij
+reddit_link: https://www.reddit.com/r/rust/comments/inpsiq/contributing_to_the_intellijrust_plugin_quick_fix/
 --- 
 This post is part of a [series]({% post_url 2020-08-23-contributing-0-setup %}) in which I describe
 my contributions to the [IntelliJ Rust](https://github.com/intellij-rust/intellij-rust) plugin.

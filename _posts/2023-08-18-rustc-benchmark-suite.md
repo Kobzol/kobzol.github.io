@@ -3,6 +3,7 @@ layout: "post"
 title: "Exploring the Rust compiler benchmark suite"
 date: "2023-08-18 15:30:00 +0200"
 categories: rust rustc
+reddit_link: https://www.reddit.com/r/rust/comments/15ukro3/exploring_the_rust_compiler_benchmark_suite/
 ---
 
 In my [recent post]({% post_url 2023-07-30-optimizing-rust-ci-2023 %}) about the Rust compiler CI

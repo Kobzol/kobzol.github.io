@@ -3,6 +3,7 @@ layout: post
 title:  "Contributing to Intellij-Rust #5: Lint attribute completion"
 date:   2020-10-26 18:37:00 +0100
 categories: rust intellij
+reddit_link: https://www.reddit.com/r/rust/comments/jkcz4w/contributing_to_intellijrust_5_lint_attribute/
 --- 
 This post is part of a [series]({% post_url 2020-08-23-contributing-0-setup %}) in which I describe
 my contributions to the [IntelliJ Rust](https://github.com/intellij-rust/intellij-rust) plugin.

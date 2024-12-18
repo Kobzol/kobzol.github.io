@@ -3,6 +3,7 @@ layout: "post"
 title: "What part of Rust compilation is the bottleneck?"
 date: "2024-03-16 00:00:00 +0100"
 categories: rust rustc
+reddit_link: https://www.reddit.com/r/rust/comments/1bfr77s/what_part_of_rust_compilation_is_the_bottleneck/
 ---
 
 Rust compilation times is an ongoing topic that generates many discussions online[^offline]. Most people don't really care about what exactly takes time when compiling Rust program; they just want it to be faster in general. But sometimes, you can see people pointing fingers at specific culprits, like LLVM or the borrow checker. In this post, I'll try to examine who is the culprit in various situations, based on data gathered from a fun little experiment.

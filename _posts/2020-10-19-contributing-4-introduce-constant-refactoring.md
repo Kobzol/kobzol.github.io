@@ -3,6 +3,7 @@ layout: post
 title:  "Contributing to Intellij-Rust #4: Introduce constant refactoring"
 date:   2020-10-19 17:29:00 +0200
 categories: rust intellij
+reddit_link: https://www.reddit.com/r/rust/comments/jgq9zk/contributing_to_the_intellijrust_plugin_introduce/
 --- 
 This post is part of a [series]({% post_url 2020-08-23-contributing-0-setup %}) in which I describe
 my contributions to the [IntelliJ Rust](https://github.com/intellij-rust/intellij-rust) plugin.

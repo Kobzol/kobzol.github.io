@@ -3,6 +3,7 @@ layout: "post"
 title: "Adding runtime benchmarks to the Rust compiler benchmark suite"
 date: "2023-09-23 16:00:00 +0200"
 categories: rust rustc
+reddit_link: https://reddit.com/r/rust/s/rt6P4xLcSf
 ---
 
 This post describes the design and implementation of a runtime benchmark suite for measuring the

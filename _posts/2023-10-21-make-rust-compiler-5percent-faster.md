@@ -3,6 +3,7 @@ layout: "post"
 title: "Make the Rust compiler 5% faster with this one weird trick"
 date: "2023-10-21 16:37:00 +0200"
 categories: rust rustc
+reddit_link: https://www.reddit.com/r/rust/comments/17d5doy/make_the_rust_compiler_5_faster_with_this_one/
 ---
 **TL;DR**: On Linux, if you have Transparent Huge Pages enabled, you can try to run `cargo` with
 the environment variable `MALLOC_CONF="thp:always,metadata_thp:always"` for a potential ~5% speed boost.

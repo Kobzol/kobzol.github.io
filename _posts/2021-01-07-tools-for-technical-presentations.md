@@ -3,6 +3,7 @@ layout: "post"
 title: "Tools for technical presentations"
 date: "2021-01-07 15:26:00 +0100"
 categories: presentations elsie
+reddit_link: https://www.reddit.com/r/Python/comments/l1ypzt/elsie_python_library_for_creating_slides/
 ---
 Programmers sometimes need to make presentations about projects that they work on, their favourite
 library or algorithms, or about a shiny new programming language. Slides for such

@@ -3,6 +3,7 @@ layout: post
 title:  "Contributing to Intellij-Rust #0: Intro & setup"
 date:   2020-07-31 15:21:35 +0200
 categories: rust intellij
+reddit_link: https://www.reddit.com/r/rust/comments/ifxr99/contributing_to_the_intellijrust_plugin_a_series/
 --- 
 Hi!
 

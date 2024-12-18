@@ -3,6 +3,7 @@ layout: "post"
 title: "Process spawning performance in Rust"
 date: "2024-01-28 17:08:00 +0100"
 categories: rust
+reddit_link: https://www.reddit.com/r/rust/comments/1ad61t7/process_spawning_performance_in_rust/
 ---
 
 As part of my PhD studies, I'm working on a distributed task runtime called [HyperQueue](https://github.com/it4innovations/hyperqueue). Its goal is to provide an ergonomic and efficient way to execute task graphs on High-Performance Computing (HPC) distributed clusters, and one of its duties is to be able to spawn a large amount of Linux processes efficiently. HyperQueue is of course written in Rust[^cpp-distributed], and it uses the standard library's [`Command`](https://doc.rust-lang.org/std/process/struct.Command.html) API to spawn processes[^tokio]. When I was benchmarking how quickly it can spawn processes on an HPC cluster, I found a few surprising performance bottlenecks, which I will describe in this post. Even though most of these bottlenecks are only significant if you literally spawn thousands of processes per second, which is not a very common use-case, I think that it's still interesting to understand what causes them.

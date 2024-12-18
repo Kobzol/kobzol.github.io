@@ -3,6 +3,7 @@ layout: "post"
 title: "Making Rust binaries smaller by default"
 date: "2024-01-23 18:26:00 +0100"
 categories: rust cargo
+reddit_link: https://www.reddit.com/r/rust/comments/19dwxel/making_rust_binaries_smaller_by_default/
 ---
 
 Have you ever tried to compile a helloworld Rust program in `--release` mode? If yes, have

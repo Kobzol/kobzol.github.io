@@ -3,6 +3,7 @@ layout: post
 title:  "Contributing to Intellij-Rust #2: Intention to substitute an associated type"
 date:   2020-08-25 16:03:00 +0200
 categories: rust intellij
+reddit_link: https://www.reddit.com/r/rust/comments/ihkwfc/contributing_to_the_intellijrust_plugin_writing/
 --- 
 This post is part of a [series]({% post_url 2020-08-23-contributing-0-setup %}) in which I describe
 my contributions to the [IntelliJ Rust](https://github.com/intellij-rust/intellij-rust) plugin.

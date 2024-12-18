@@ -3,6 +3,7 @@ layout: "post"
 title: "Compiling Rust is testing"
 date: "2024-02-04 16:13:00 +0100"
 categories: rust
+reddit_link: https://www.reddit.com/r/rust/comments/1aiscx5/compiling_rust_is_testing/
 ---
 
 > Edit: it looks like some people misunderstood what I wanted to express with this post. So, to avoid further confusion, pretty much the only thing that I wanted to say here was this: I know that waiting for a Rust program to compile sucks, but we should not forget all the benefits that this compilation process brings us in return. (Yes, this post could have been a tweet).

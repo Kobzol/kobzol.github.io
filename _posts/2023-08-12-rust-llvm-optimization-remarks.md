@@ -3,6 +3,7 @@ layout: "post"
 title: "Inspecting rustc LLVM optimization remarks using cargo-remark"
 date: "2023-08-12 15:00:00 +0200"
 categories: rust cargo
+reddit_link: https://www.reddit.com/r/rust/comments/15p4thi/cargoremark_examine_rustc_llvm_optimization/
 ---
 
 **TL;DR**: This post describes LLVM optimization remarks that can useful to help the compiler

@@ -3,6 +3,7 @@ layout: "post"
 title: "Speeding up the Rust compiler without changing its code"
 date: "2022-10-27 09:57:00 +0200"
 categories: rust rustc
+reddit_link: https://www.reddit.com/r/rust/comments/yeunrs/speeding_up_the_rust_compiler_without_changing/
 ---
 
 …Yes, I know that the title looks like a clickbait. But it's actually not that far from the truth :)

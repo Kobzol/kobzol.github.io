@@ -3,6 +3,7 @@ layout: "post"
 title: "Elsie: programmable presentations"
 date: "2021-01-07 15:30:00 +0100"
 categories: presentations elsie
+reddit_link: https://www.reddit.com/r/Python/comments/l1ypzt/elsie_python_library_for_creating_slides/
 ---
 In the [last post]({% post_url 2021-01-07-tools-for-technical-presentations %}), I have written
 about existing tools for creating technically-oriented slides and what I dislike about them. TLDR

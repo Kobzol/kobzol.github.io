@@ -3,6 +3,7 @@ layout: "post"
 title: "Examining Rust async iterator approaches"
 date: "2023-11-27 21:16:00 +0100"
 categories: rust
+reddit_link: https://www.reddit.com/r/rust/comments/185ew5z/examining_rust_async_iterator_approaches/
 ---
 
 I'm an avid user of async Rust, and I have used it to implement various kinds of

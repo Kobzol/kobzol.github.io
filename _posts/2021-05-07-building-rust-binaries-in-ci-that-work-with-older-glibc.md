@@ -3,6 +3,7 @@ layout: "post"
 title: "Building Rust binaries in CI that work with older GLIBC"
 date: "2021-05-07 08:39:00 +0100"
 categories: rust ci
+reddit_link: https://www.reddit.com/r/rust/comments/n6udyk/building_rust_binaries_in_ci_that_work_with_older/
 ---
 **TL;DR**: This post documents my attempts of building a Rust binary in CI that would work on older
 Linux systems. I was using GitHub Actions, but it should be also applicable for other CI systems.

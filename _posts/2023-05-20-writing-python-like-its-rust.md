@@ -3,6 +3,7 @@ layout: "post"
 title: "Writing Python like it's Rust"
 date: "2023-05-20 16:42:00 +0200"
 categories: rust python
+reddit_link: https://www.reddit.com/r/rust/comments/13mxu2r/writing_python_like_its_rust/
 ---
 
 I started programming in Rust several years ago, and it has gradually changed the way I design
