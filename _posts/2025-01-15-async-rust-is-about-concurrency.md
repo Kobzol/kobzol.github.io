@@ -4,7 +4,7 @@ title: "Async Rust is about concurrency, not (just) performance"
 alternative_title: In defense of async (Rust)
 date: "2025-01-15 12:00:00 +0100"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1i1wjoz/async_rust_is_about_concurrency_not_just/
 ---
 
 > **TLDR**: I think that the primary benefit of `async/await` is that it lets us concisely express complex concurrency; any (potential) performance improvements are just a second-order effect. We should thus judge async primarily based on how it simplifies our code, not how (or if) it makes the code faster.
