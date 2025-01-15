@@ -6,6 +6,8 @@ categories: rust python
 reddit_link: https://www.reddit.com/r/rust/comments/13mxu2r/writing_python_like_its_rust/
 ---
 
+> You can check out a [YouTube recording](https://www.youtube.com/watch?v=OFRLKWacOoA) of a talk based on this blog post.
+
 I started programming in Rust several years ago, and it has gradually changed the way I design
 programs in other programming languages, most notably in Python. Before I started using Rust, I was
 usually writing Python code in a very dynamic and type-loose way, without type hints, passing and
