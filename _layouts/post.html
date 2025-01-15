@@ -24,8 +24,11 @@ layout: default
       {%- if forloop.last == false %}, {% endif -%}
       {% endfor %}
       {%- endif -%}
+      {%- if page.alternative_title -%}
+      <span class="separator">|</span>Alternative title: {{ page.alternative_title }}</span>
+      {%- endif -%}
       {%- if page.reddit_link -%}
-      <span style="margin-left: 10px;"><a href="{{ page.reddit_link }}" target="_blank">Reddit discussion</a></span>
+      <span class="separator">|</span><span><a href="{{ page.reddit_link }}" target="_blank">Reddit discussion</a></span>
       {%- endif -%}
     </p>
   </header>
@@ -40,3 +43,12 @@ layout: default
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
+
+<style>
+.footnotes {
+  margin-top: 50px;
+}
+.separator {
+  margin: 0 5px;
+}
+</style>
