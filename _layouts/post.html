@@ -25,8 +25,7 @@ layout: default
       {% endfor %}
       {%- endif -%}
       {%- if page.alternative_title -%}
-      <span class="separator">|</span><span title="{{ page.alternative_title }}" style="text-decoration:underline;
-text-decoration-style: dotted;">Alternative title</span>
+      <span class="separator">|</span>Alternative title: {{ page.alternative_title }}</span>
       {%- endif -%}
       {%- if page.reddit_link -%}
       <span class="separator">|</span><span><a href="{{ page.reddit_link }}" target="_blank">Reddit discussion</a></span>
