@@ -156,6 +156,10 @@ Some(15)
 
 So tokio was clearly terminating the worker thread after a few seconds of inactivity, which caused the kernel to terminate the spawned process with `SIGTERM`. This was also the reason why tasks would actually finish successfully if you submitted more of them (as shown in [#815](https://github.com/It4innovations/hyperqueue/discussions/815)), because the worker thread would receive more work to do (more commands to spawn), so it took more time for tokio to terminate it. Only the last task would then fail, because the worker thread had nothing else to do, so it ended and that killed the last task abruptly. Just incredible.
 
+> Edit: Someone on [Reddit](https://www.reddit.com/r/rust/comments/1iwf5sb/comment/medgbbf/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+> sent me a link to a [method](https://docs.rs/tokio/latest/tokio/runtime/struct.Builder.html#method.thread_keep_alive) that can override the thread keep-alive duration. Its description makes it clear why the tasks were failing after
+> exactly 10 seconds :laughing: I don't want to modify this duration to "fix" this bug though. HyperQueue should use as little resources as possible, and idle threads should thus be cleaned up quickly.
+
 Therefore, the case was closed. The problem was a very unlucky interaction of us starting a process in a different thread than the main thread, using `PR_SET_PDEATHSIG` and tokio reaping worker threads in the background. Note that tokio is not to be blamed here, as reaping of idle threads is a reasonable thing to do. This was just one of those unfortunate cases where a combination of several things that otherwise worked well did not in fact work well together.
 
 ## Fixing the bug
