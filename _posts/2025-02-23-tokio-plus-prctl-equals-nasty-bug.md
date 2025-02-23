@@ -3,7 +3,7 @@ layout: "post"
 title: "Tokio + prctl = nasty bug"
 date: "2025-02-23 18:00:00 +0100"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1iwf5sb/tokio_prctl_nasty_bug/
 ---
 
 Recently I encountered a bug so cute that I immediately knew that I will want to share it on my blog. It was one of those bugs that even Rust can't save you from. It occurred in [HyperQueue](https://github.com/It4innovations/hyperqueue) (HQ), a distributed task scheduler written in Rust that I work on.
