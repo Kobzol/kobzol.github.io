@@ -3,7 +3,7 @@ layout: "post"
 title: "Just write a test for it"
 date: "2025-03-25 16:00:00 +0100"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1jjm289/just_write_a_test_for_it/
 ---
 
 > This is a short appreciation post about Rust continuously guiding me towards doing The Right Thing™.
