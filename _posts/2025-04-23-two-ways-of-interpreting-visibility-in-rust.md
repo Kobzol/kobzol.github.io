@@ -3,7 +3,7 @@ layout: "post"
 title: "Two ways of interpreting visibility in Rust"
 date: "2025-04-23 13:00:00 +0200"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1k5yv6p/two_ways_of_interpreting_visibility_in_rust/
 ---
 Last year, while I was browsing through Rust compiler [pull requests](https://github.com/rust-lang/rust/pulls), I noticed [#126013](https://github.com/rust-lang/rust/pull/126013), which added the [`unreachable_pub`](https://doc.rust-lang.org/stable/nightly-rustc/rustc_lint/builtin/static.UNREACHABLE_PUB.html) lint to several crates of the compiler. This piqued my interest, because I did not know that lint at the time. But when I examined its description, I was quite surprised, become the lint made absolutely no sense to me! After I discussed this with the author of the PR[^nnethercote], I realized that the way I think about visibility in Rust is perhaps a bit strange, or at least different from the "way it was designed to be used".
 
