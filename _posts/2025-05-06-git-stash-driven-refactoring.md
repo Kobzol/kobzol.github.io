@@ -3,7 +3,7 @@ layout: "post"
 title: "git stash driven refactoring"
 date: "2025-05-06 13:00:00 +0200"
 categories: programming
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/programming/comments/1kg37vm/git_stash_driven_refactoring
 ---
 
 Does the following sound familiar to you?
