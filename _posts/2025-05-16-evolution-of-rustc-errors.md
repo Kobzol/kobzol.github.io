@@ -3,7 +3,7 @@ layout: "post"
 title: "Evolution of Rust compiler errors"
 date: "2025-05-16 13:00:00 +0200"
 categories: rust rustc
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1knzzqa/evolution_of_rust_compiler_errors/
 ---
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
