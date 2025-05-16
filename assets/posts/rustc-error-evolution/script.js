@@ -41,9 +41,27 @@ function showErrorWidget(data, id) {
     currentVersionLabel.className = 'version-label';
     currentVersionLabel.textContent = program.versions[0].release;
 
+    const beforeButton = document.createElement("button");
+    beforeButton.className = "version-before";
+    beforeButton.innerText = "<";
+    beforeButton.addEventListener("click", () => {
+        versionSlider.value = Math.max(0, parseInt(versionSlider.value) - 1).toString();
+        versionSlider.dispatchEvent(new Event('input'));
+    });
+
+    const afterButton = document.createElement("button");
+    afterButton.className = "version-after";
+    afterButton.innerText = ">";
+    afterButton.addEventListener("click", () => {
+        versionSlider.value = Math.min(program.versions.length - 1, parseInt(versionSlider.value) + 1).toString();
+        versionSlider.dispatchEvent(new Event('input'));
+    });
+
+    versionSliderContainer.appendChild(beforeButton);
     versionSliderContainer.appendChild(minVersionLabel);
     versionSliderContainer.appendChild(versionSlider);
     versionSliderContainer.appendChild(maxVersionLabel);
+    versionSliderContainer.appendChild(afterButton);
 
     // Add error message
     const errorMessage = document.createElement('div');

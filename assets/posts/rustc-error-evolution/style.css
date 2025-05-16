@@ -26,6 +26,18 @@
     align-items: center;
 }
 
+.version-before {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.version-after {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
 .version-slider {
     flex: 1;
     margin: 0 10px;
