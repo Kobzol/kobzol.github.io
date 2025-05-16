@@ -35,7 +35,7 @@ The widget below visualizes how the error messages evolved over time. You can us
 There are a couple of interesting things to note:
 
 - First and foremost, the error messages are simply *great*. If you have used Rust previously, this probably isn't too surprising. Even Rust `1.0.0` contained pretty solid error reporting, and it got much better over time.
-- Rust `1.2.0` introduced numerical [error codes](https://doc.rust-lang.org/error_codes/error-index.html).
+- Rust `1.2.0` introduced numerical [error codes](https://doc.rust-lang.org/error_codes/error-index.html). Edit: they were actually added in `1.0.0`, just that this specific error did not have a code until `1.2.0`, as was pointed out to me by [Steve Klabnik](https://www.reddit.com/r/rust/comments/1knzzqa/comment/msnlx2r).
 - Rust `1.26.0` introduced colorful error messages. It sounds like a small change, but you can see what an improvement it makes! It also added the `rustc --explain <error-code>` hint.
 - The error messages sometimes went a bit back and forth in different Rust versions, which is a bit funny. For example, the `error: aborting due to 2 previous errors` has switched to `...previous error(s)` in `1.19.0` and then back to `...2 previous errors` in `1.20.0`, which seems like an unintended change in `1.19.0`. Sometimes the difference is only in a single space, which is not even visible in the visualization above.
 - The error spans are also continuously being improved between rustc versions. My favourite example is the `Wrong field` program change in `1.87.0`.
