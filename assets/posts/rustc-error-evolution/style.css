@@ -43,7 +43,13 @@
     padding: 12px;
     border-radius: 10px;
     line-height: 1.4;
-    white-space: pre-wrap;
     max-height: 400px;
     overflow-y: auto;
+    white-space: pre;
+}
+
+@media only screen and (min-width: 800px) {
+    .error-message {
+        white-space: pre-wrap;
+    }
 }
