@@ -3,7 +3,7 @@ layout: "post"
 title: "Disable debuginfo to improve Rust compile times"
 date: "2025-05-20 15:00:00 +0200"
 categories: rust rustc
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1kr7ri4/psa_you_can_disable_debuginfo_to_improve_rust/
 ---
 
 > This blog post is essentially a PSA on how you can easily improve `dev` incremental rebuild performance.
