@@ -3,7 +3,7 @@ layout: "post"
 title: "Reducing Cargo target directory size with -Zno-embed-metadata"
 date: "2025-06-02 14:00:00 +0200"
 categories: rust rustc
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1l1gnoj/reducing_cargo_target_directory_size_with
 ---
 
 Disk usage of the `target` directory is a commonly cited annoyance with Rust (and Cargo)
