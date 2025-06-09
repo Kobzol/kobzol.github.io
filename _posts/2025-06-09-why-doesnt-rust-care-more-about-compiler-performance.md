@@ -3,7 +3,7 @@ layout: "post"
 title: "Why doesn't Rust care more about compiler performance?"
 date: "2025-06-09 13:00:00 +0200"
 categories: rust rustc
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1l77jso/why_doesnt_rust_care_more_about_compiler
 ---
 
 Perhaps the most often repeated complaint about Rust is its slow feedback loop and long compilation times. I hear about it all the time; in Rust podcasts, [blog](https://loglog.games/blog/leaving-rust-gamedev) [posts](https://gist.github.com/rtfeldman/77fb430ee57b42f5f2ca973a3992532f), [surveys](https://blog.rust-lang.org/2025/02/13/2024-State-Of-Rust-Survey-results/#challenges), conference talks or offline discussions. I also regularly complain about it, being a Rust user myself!
