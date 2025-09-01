@@ -68,15 +68,13 @@ let params = ReadOnlyQueueParameters::new(
 ```
 
 This code was bothering me for a long time, because everytime I had to add a new field to the
-parameters, I would have to extend this `new` function with yet another parameter, and the call-sites
+struct, I would have to extend this `new` function with yet another parameter, and the call-sites
 would become ever more confusing. This is how such a change would typically look as a diff:
 
 ```diff
-...
 -   None,
 -   None
 - )
-...
 +   None,
 +   None,
 +   None,
@@ -117,17 +115,16 @@ let queue = ReadOnlyQueueParameters::new(QueueParameters {
 ```
 
 But at the same time, I cannot modify the fields from the outside after construction anymore.
-I could even remove the accessor methods by implementing the
-[`Deref`](https://doc.rust-lang.org/std/ops/trait.Deref.html) trait for the wrapper, but
-here I decided to keep the code more explicit. 
+Truly a "we have init-only fields at home" solution. I could even remove the accessor methods by
+implementing the [`Deref`](https://doc.rust-lang.org/std/ops/trait.Deref.html) trait for the wrapper, but here I decided to keep the code more explicit.
 
-This is, of course, yet another instance of the [newtype pattern](https://rust-unofficial.github.io/patterns/patterns/behavioural/newtype.html), which I use all the time, and even [teach](https://github.com/Kobzol/rust-course-fei) it to my students! And the solution is really quite trivial in hindsight. So it was a bit
+This is, of course, yet another instance of the [newtype pattern](https://rust-unofficial.github.io/patterns/patterns/behavioural/newtype.html), which I use all the time, and even [explain](https://github.com/Kobzol/rust-course-fei) it to my students. And the solution is really quite trivial in hindsight. So it was a bit
 embarrassing to me that it took me so long to realize that it can be used to solve this annoyance.
 Although frankly, the main issue was to find the motivation to spend five minutes to refactor code
 that was bothering me for years :)
 
-> For these simple newtype wrappers, it would be nice to be able to simply implement the `From`
-> trait, to go from the inner field to a value of the newtype. More about that [soon](https://github.com/rust-lang/rfcs/pull/3809).
+> For these simple newtype wrappers, it would be nice to be able to simplify the implementation of the
+> `From` trait, to go from the inner field to a value of the newtype. More about that [soon](https://github.com/rust-lang/rfcs/pull/3809).
 
 ## Conclusion
 
