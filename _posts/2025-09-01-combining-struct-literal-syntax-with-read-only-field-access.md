@@ -3,7 +3,7 @@ layout: "post"
 title: "Combining struct literal syntax with read-only field access"
 date: "2025-09-01 13:00:00 +0200"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1n5nkzu/combining_struct_literal_syntax_with_readonly
 ---
 
 Recently, I found myself struggling with a small annoyance related to struct field visibility
