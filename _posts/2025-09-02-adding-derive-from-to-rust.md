@@ -135,7 +135,7 @@ using their `Default` impl:
 #[derive(From)]
 struct Foo(#[from] u32, bool);
 
-impl From<u32> for From {
+impl From<u32> for Foo {
     fn from(value: u32) -> Self {
         Self(value, Default::default())
     }
