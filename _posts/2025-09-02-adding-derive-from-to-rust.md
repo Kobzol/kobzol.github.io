@@ -3,7 +3,7 @@ layout: "post"
 title: "Adding #[derive(From)] to Rust"
 date: "2025-09-02 13:00:00 +0200"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1n6kxgf/adding_derivefrom_to_rust
 ---
 
 **TL;DR**: `#[derive(From)]` can be used in nightly now. See [here](#how-to-use-it) on how to use it.
