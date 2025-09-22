@@ -38,7 +38,7 @@ pub fn bar() { println!("bar"); }
 ```
 and recompile, the resulting binary still has the exact same size as before. And that is what I would expect, because the `bar` function is not called anywhere, so it should not take space in my binary.
 
-However, the situation changes if I add debuginfo. If I compile the main crate with two versions of `dep` (just `foo` vs `foo + bar`) in release mode with `debug = "line-tables-only"`, the size of the binary jumps from `3874080` bytes to `3874232` bytes! So even if the `bar` function is not used anywhere, its debuginfo is still taking space in my binary :angry: This is not so bad for a single function, but if you consider the amount of code that Rust programs typically depend on, and how much of that code is actually unused, it starts to quickly add up.
+However, the situation changes if I add debuginfo. If I compile the main crate with two versions of `dep` (just `foo` vs `foo + bar`) in release mode with `debug = "line-tables-only"`, the size of the binary jumps from `3 874 080` bytes to `3 874 232` bytes! So even if the `bar` function is not used anywhere, its debuginfo is still taking space in my binary :angry: This is not so bad for a single function, but if you consider the amount of code that Rust programs typically depend on, and how much of that code is actually unused, it starts to quickly add up.
 
 This also explains why the binary size suddenly jumped to almost 4 MiB with debuginfo enabled; that is the debuginfo of the standard library being included in it. Even though a lot of it is actually unused/dead code (because my program doesn't use these parts of the stdlib), its whole debuginfo is still included. Even though the stdlib is a bit special in this regard, because it is precompiled, the same would actually happen with a "normal" crate dependency that you build from scratch.
 
@@ -63,10 +63,10 @@ $ llvm-dwarfutil hq hq-gc
 
 Here are the results:
 
-| **Version** | `release` profile |     `dist` profile |
-|-------------|------------------:|-------------------:|
-| Original    | `70924912` (100%) |  `50832304` (100%) |
-| GC      	   |  `59046440` (83%) | `53162184`  (104%) |
+| **Version** |   `release` profile |       `dist` profile |
+|-------------|--------------------:|---------------------:|
+| Original    | `70 924 912` (100%) |  `50 832 304` (100%) |
+| GC      	   |  `59 046 440` (83%) | `53 162 184`  (104%) |
 
 For the `release` profile, it resulted in a nice 17% binary improvement, not bad! However, for the more optimized (and smaller) `dist` profile, the resulting binary is actually larger. So it seems that sometimes it doesn't really help.
 
@@ -86,11 +86,11 @@ $ objcopy --compress-debug-sections=zlib hq hq-zlib
 
 I tried both `zlib` compression (which took ~1s to compress) and `zstd` (which took ~0.1s to compress). Here are the results:
 
-| **Version**   | `release` profile |    `dist` profile |
-|---------------|------------------:|------------------:|
-| Original      | `70924912` (100%) | `50832304` (100%) |
-| `zlib`      	 |  `24775848` (35%) | `18751280`  (37%) |
-| `zstd`      	 |  `23413992` (33%) | `17472960`  (34%) |
+| **Version**   |   `release` profile |      `dist` profile |
+|---------------|--------------------:|--------------------:|
+| Original      | `70 924 912` (100%) | `50 832 304` (100%) |
+| `zlib`      	 |  `24 775 848` (35%) | `18 751 280`  (37%) |
+| `zstd`      	 |  `23 413 992` (33%) | `17 472 960`  (34%) |
 
 The results are pretty great! Going from ~50 MiB down to ~18 MiB is really impressive.
 
@@ -102,14 +102,14 @@ Interestingly, these approaches can be combined to produce even smaller binaries
 
 Here are the final results with all the approaches I described above:
 
-| **Version** | `release` profile |    `dist` profile |
-|-------------|------------------:|------------------:|
-| Original    | `70924912` (100%) | `50832304` (100%) |
-| GC          |  `59046440` (83%) | `53162184` (105%) |
-| `zlib`      |  `24775848` (35%) |  `18751280` (37%) |
-| GC + `zlib` |  `20457568` (29%) |  `17318760` (34%) |
-| `zstd`      |  `23413992` (33%) |  `17472960` (34%) |
-| GC + `zstd` |  `19777752` (28%) |  `16492768` (32%) |
+| **Version** |   `release` profile |      `dist` profile |
+|-------------|--------------------:|--------------------:|
+| Original    | `70 924 912` (100%) | `50 832 304` (100%) |
+| GC          |  `59 046 440` (83%) | `53 162 184` (105%) |
+| `zlib`      |  `24 775 848` (35%) |  `18 751 280` (37%) |
+| GC + `zlib` |  `20 457 568` (29%) |  `17 318 760` (34%) |
+| `zstd`      |  `23 413 992` (33%) |  `17 472 960` (34%) |
+| GC + `zstd` |  `19 777 752` (28%) |  `16 492 768` (32%) |
 
 You can find the script that I used to generate this table [here](https://gist.github.com/Kobzol/71f040d6d3a4b356afcdde20fc47dc81), in case you wanted to perform a similar experiment on your own binaries.
 
