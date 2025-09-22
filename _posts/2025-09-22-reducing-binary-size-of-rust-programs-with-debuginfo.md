@@ -98,6 +98,8 @@ I suppose that the disadvantage of this approach is the risk that some tools tha
 
 [^zlib-gnu]: Actually, we use `zlib-gnu`, but I don't remember why anymore :sweat_smile:.
 
+**EDIT**: `thecakeisalie16` [showed](https://www.reddit.com/r/rust/comments/1nnm6di/comment/nflopg6/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) on Reddit that you can also perform debuginfo compression directly using the linker with `RUSTFLAGS="-Clink-arg=-Wl,--compress-debug-sections=zlib"`. Didn't know about that, very cool!
+
 Interestingly, these approaches can be combined to produce even smaller binaries, by first running gargage collection and then compression (the other direction doesn't really make sense). And funnily enough, compressing the garbage-collected `dist` binary, which is actually larger than the *original* binary, produces a smaller file than compressing the original `dist` binary!
 
 Here are the final results with all the approaches I described above:
