@@ -3,7 +3,7 @@ layout: "post"
 title: "Reducing binary size of (Rust) programs with debuginfo"
 date: "2025-09-22 13:00:00 +0200"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1nnm6di/reducing_binary_size_of_rust_programs_with
 ---
 
 **TL;DR**: There are some [ways](#how-can-we-reduce-the-binary-size) how you can reduce the binary size of (Rust) programs that contain debug information. 
