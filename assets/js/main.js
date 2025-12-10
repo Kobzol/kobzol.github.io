@@ -1,5 +1,34 @@
+// Theme switching - run before DOM ready to avoid flash
+(function() {
+    const savedTheme = localStorage.getItem('theme');
+    let theme;
+
+    if (savedTheme) {
+        // Use saved preference if it exists
+        theme = savedTheme;
+    } else {
+        // Otherwise use browser preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        theme = prefersDark ? 'dark' : 'light';
+    }
+
+    document.documentElement.setAttribute('data-theme', theme);
+})();
+
 $(function() {
     $(".gif").gifplayer();
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+    }
 
     // Show footnote tooltip on hover of tooltip reference
     const footnoteLinks = document.querySelectorAll('a.footnote[role="doc-noteref"]');
