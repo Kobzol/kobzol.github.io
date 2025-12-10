@@ -2,3 +2,213 @@
 ---
 @import "minima";
 @import "css/gifplayer.css";
+
+/* Theme variables */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --link-color: #2a7ae2;
+  --link-visited-color: #1756a9;
+  --code-bg: #f5f5f5;
+  --border-color: #e8e8e8;
+  --header-bg: #ffffff;
+  --footer-bg: #f9f9f9;
+  --table-header-bg: #f0f0f0;
+  --table-border: #e8e8e8;
+  --blockquote-border: #e8e8e8;
+  --blockquote-text: #828282;
+  --pre-bg: #f5f5f5;
+  --pre-border: #e8e8e8;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --link-color: #58a6ff;
+  --link-visited-color: #8e96f0;
+  --code-bg: #0d1117;
+  --border-color: #3a3a3a;
+  --header-bg: #0d1117;
+  --footer-bg: #161b22;
+  --table-header-bg: #2d2d2d;
+  --table-border: #3a3a3a;
+  --blockquote-border: #3a3a3a;
+  --blockquote-text: #8b949e;
+  --pre-bg: #0d1117;
+  --pre-border: #3a3a3a;
+}
+
+/* Apply theme colors */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--link-color);
+}
+
+a:visited {
+  color: var(--link-visited-color);
+}
+
+[data-theme="dark"] a:hover {
+  color: #79c0ff;
+}
+
+[data-theme="dark"] a:visited:hover {
+  color: #a5a9f0;
+}
+
+code {
+  background-color: var(--code-bg);
+}
+
+pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--pre-border);
+}
+
+/* Fix nested code elements in pre blocks */
+pre code {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.highlight {
+  background-color: var(--code-bg);
+}
+
+.highlight pre {
+  background-color: transparent;
+}
+
+.site-header {
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.site-title,
+.site-title:visited {
+  color: var(--text-color);
+}
+
+.site-nav .page-link {
+  color: var(--text-color);
+}
+
+.site-footer {
+  background-color: var(--footer-bg);
+  border-top: 1px solid var(--border-color);
+}
+
+table {
+  border: 1px solid var(--table-border);
+  color: var(--text-color);
+}
+
+table th {
+  background-color: var(--table-header-bg);
+  color: var(--text-color);
+}
+
+table td,
+table th {
+  border: 1px solid var(--table-border);
+  color: var(--text-color);
+}
+
+table tr {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+table tbody tr:nth-child(odd) td,
+table tbody tr:nth-child(odd) th {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+table tbody tr:nth-child(even) td,
+table tbody tr:nth-child(even) th {
+  background-color: var(--table-header-bg) !important;
+  color: var(--text-color) !important;
+}
+
+blockquote {
+  color: var(--blockquote-text);
+  border-left: 4px solid var(--blockquote-border);
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  color: var(--text-color);
+}
+
+/* Syntax highlighting adjustments for dark mode */
+[data-theme="dark"] .highlight {
+  background: var(--code-bg);
+  color: #f0f6fc;
+}
+
+[data-theme="dark"] .highlighter-rouge .highlight {
+  background: var(--code-bg);
+}
+
+[data-theme="dark"] code,
+[data-theme="dark"] pre {
+  color: #f0f6fc;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  transition: opacity 0.2s;
+  vertical-align: middle;
+}
+
+.theme-toggle:hover {
+  opacity: 0.7;
+}
+
+.theme-icon {
+  display: none;
+}
+
+[data-theme="light"] .sun-icon,
+[data-theme="dark"] .moon-icon {
+  display: block;
+}
+
+/* Ensure theme toggle appears in mobile menu */
+@media screen and (max-width: 600px) {
+  .theme-toggle {
+    display: inline-flex;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+/* Dark mode for footnote tooltips */
+[data-theme="dark"] .footnote-tooltip {
+  background-color: #2d2d2d;
+  border-color: #3a3a3a;
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .footnote-tooltip code {
+  background-color: #1a1a1a;
+}
