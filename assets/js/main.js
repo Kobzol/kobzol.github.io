@@ -47,7 +47,7 @@ $(function() {
     }
 
     // Show footnote tooltip on hover of tooltip reference
-    const footnoteLinks = document.querySelectorAll('a.footnote[role="doc-noteref"]');
+    const footnoteLinks = document.querySelectorAll('a.footnote[rel="footnote"]');
 
     footnoteLinks.forEach(link => {
         let hideTimeout = null;
