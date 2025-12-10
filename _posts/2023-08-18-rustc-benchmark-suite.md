@@ -383,7 +383,9 @@ repository.
 
 Here is a diagram that shows the individual components and how do they communicate together:
 
+<div style="background: white; padding: 10px;" markdown="1">
 ![Diagram showing the Rust benchmark infrastructure](/assets/posts/rustc-perf/infrastructure.png)
+</div>
 
 > Icons for the diagram were sourced from [svgrepo.com](https://www.svgrepo.com).
 
