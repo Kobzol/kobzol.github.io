@@ -212,3 +212,55 @@ blockquote {
 [data-theme="dark"] .footnote-tooltip code {
   background-color: #1a1a1a;
 }
+
+/* Dark mode fixes for rustc-error-evolution post */
+[data-theme="dark"] #error-widget {
+  background-color: #161b22;
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .error-message {
+  background-color: #0d1117;
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .version-label {
+  color: #8b949e;
+}
+
+/* Dark mode for highlight.js (used in rustc-error-evolution post) */
+[data-theme="dark"] .source-code pre {
+  background-color: #0d1117;
+  color: #f0f6fc;
+}
+
+[data-theme="dark"] .hljs {
+  background-color: #0d1117;
+  color: #f0f6fc;
+}
+
+[data-theme="dark"] .hljs-keyword {
+  color: #ff7b72;
+}
+
+[data-theme="dark"] .hljs-string {
+  color: #a5d6ff;
+}
+
+[data-theme="dark"] .hljs-number {
+  color: #79c0ff;
+}
+
+[data-theme="dark"] .hljs-comment {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .hljs-function,
+[data-theme="dark"] .hljs-title {
+  color: #d2a8ff;
+}
+
+[data-theme="dark"] .hljs-variable,
+[data-theme="dark"] .hljs-name {
+  color: #f0f6fc;
+}
