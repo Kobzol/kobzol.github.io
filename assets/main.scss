@@ -207,6 +207,10 @@ blockquote {
   color: #79c0ff;
 }
 
+[data-theme="dark"] .highlight .nd {
+  color: #d3c424;
+}
+
 [data-theme="dark"] .highlight .n,
 [data-theme="dark"] .highlight .nv,
 [data-theme="dark"] .highlight .no,
@@ -214,12 +218,13 @@ blockquote {
   color: #f0f6fc;
 }
 
+[data-theme="dark"] .highlight .nf {
+  color: #24bf9c;
+}
+
 [data-theme="dark"] .highlight .na,
-[data-theme="dark"] .highlight .nb,
 [data-theme="dark"] .highlight .nc,
-[data-theme="dark"] .highlight .nd,
 [data-theme="dark"] .highlight .ne,
-[data-theme="dark"] .highlight .nf,
 [data-theme="dark"] .highlight .ni,
 [data-theme="dark"] .highlight .nl,
 [data-theme="dark"] .highlight .nn,
