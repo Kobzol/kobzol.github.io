@@ -60,13 +60,28 @@ a:visited {
   color: #a5a9f0;
 }
 
-code,
-pre {
+code {
   background-color: var(--code-bg);
 }
 
 pre {
+  background-color: var(--code-bg);
   border: 1px solid var(--pre-border);
+}
+
+/* Fix nested code elements in pre blocks */
+pre code {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.highlight {
+  background-color: var(--code-bg);
+}
+
+.highlight pre {
+  background-color: transparent;
 }
 
 .site-header {
