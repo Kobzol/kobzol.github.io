@@ -165,6 +165,103 @@ blockquote {
   color: #f0f6fc;
 }
 
+/* Rouge syntax highlighting for dark mode */
+[data-theme="dark"] .highlight .c,
+[data-theme="dark"] .highlight .cm,
+[data-theme="dark"] .highlight .c1,
+[data-theme="dark"] .highlight .cs {
+  color: #8b949e;
+  font-style: italic;
+}
+
+[data-theme="dark"] .highlight .k,
+[data-theme="dark"] .highlight .kc,
+[data-theme="dark"] .highlight .kd,
+[data-theme="dark"] .highlight .kn,
+[data-theme="dark"] .highlight .kp,
+[data-theme="dark"] .highlight .kr,
+[data-theme="dark"] .highlight .kt {
+  color: #ff7b72;
+}
+
+[data-theme="dark"] .highlight .s,
+[data-theme="dark"] .highlight .s1,
+[data-theme="dark"] .highlight .s2,
+[data-theme="dark"] .highlight .sb,
+[data-theme="dark"] .highlight .sc,
+[data-theme="dark"] .highlight .sd,
+[data-theme="dark"] .highlight .sh,
+[data-theme="dark"] .highlight .si,
+[data-theme="dark"] .highlight .sx,
+[data-theme="dark"] .highlight .sr,
+[data-theme="dark"] .highlight .ss {
+  color: #a5d6ff;
+}
+
+[data-theme="dark"] .highlight .m,
+[data-theme="dark"] .highlight .mf,
+[data-theme="dark"] .highlight .mh,
+[data-theme="dark"] .highlight .mi,
+[data-theme="dark"] .highlight .mo,
+[data-theme="dark"] .highlight .il {
+  color: #79c0ff;
+}
+
+[data-theme="dark"] .highlight .n,
+[data-theme="dark"] .highlight .nv,
+[data-theme="dark"] .highlight .no,
+[data-theme="dark"] .highlight .p {
+  color: #f0f6fc;
+}
+
+[data-theme="dark"] .highlight .na,
+[data-theme="dark"] .highlight .nb,
+[data-theme="dark"] .highlight .nc,
+[data-theme="dark"] .highlight .nd,
+[data-theme="dark"] .highlight .ne,
+[data-theme="dark"] .highlight .nf,
+[data-theme="dark"] .highlight .ni,
+[data-theme="dark"] .highlight .nl,
+[data-theme="dark"] .highlight .nn,
+[data-theme="dark"] .highlight .nt,
+[data-theme="dark"] .highlight .nx {
+  color: #d2a8ff;
+}
+
+[data-theme="dark"] .highlight .o,
+[data-theme="dark"] .highlight .ow {
+  color: #ff7b72;
+}
+
+[data-theme="dark"] .highlight .bp,
+[data-theme="dark"] .highlight .vc,
+[data-theme="dark"] .highlight .vg,
+[data-theme="dark"] .highlight .vi {
+  color: #79c0ff;
+}
+
+[data-theme="dark"] .highlight .ge {
+  font-style: italic;
+}
+
+[data-theme="dark"] .highlight .gs {
+  font-weight: bold;
+}
+
+[data-theme="dark"] .highlight .gd {
+  color: #ff7b72;
+  background-color: #490202;
+}
+
+[data-theme="dark"] .highlight .gi {
+  color: #7ee787;
+  background-color: #04260f;
+}
+
+[data-theme="dark"] .highlight .gu {
+  color: #8b949e;
+}
+
 /* Theme toggle button */
 .theme-toggle {
   background: none;
