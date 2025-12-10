@@ -26,7 +26,7 @@
   --text-color: #e0e0e0;
   --link-color: #58a6ff;
   --link-visited-color: #8e96f0;
-  --code-bg: #2d2d2d;
+  --code-bg: #0d1117;
   --border-color: #3a3a3a;
   --header-bg: #0d1117;
   --footer-bg: #161b22;
@@ -34,7 +34,7 @@
   --table-border: #3a3a3a;
   --blockquote-border: #3a3a3a;
   --blockquote-text: #8b949e;
-  --pre-bg: #2d2d2d;
+  --pre-bg: #0d1117;
   --pre-border: #3a3a3a;
 }
 
@@ -153,10 +153,16 @@ blockquote {
 /* Syntax highlighting adjustments for dark mode */
 [data-theme="dark"] .highlight {
   background: var(--code-bg);
+  color: #f0f6fc;
 }
 
 [data-theme="dark"] .highlighter-rouge .highlight {
   background: var(--code-bg);
+}
+
+[data-theme="dark"] code,
+[data-theme="dark"] pre {
+  color: #f0f6fc;
 }
 
 /* Theme toggle button */
