@@ -96,9 +96,9 @@ content-type: application/json
 authorization: Bearer foo
 user-agent: octocrab
 host: localhost:5555
-content-length: 27
+content-length: 28
 
-{"sha":"foo", force":true}
+{"sha":"foo", "force":true}
 ```
 
 ```http
