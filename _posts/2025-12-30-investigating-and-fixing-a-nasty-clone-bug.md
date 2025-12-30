@@ -3,7 +3,7 @@ layout: "post"
 title: "Investigating and fixing a nasty clone bug"
 date: "2025-12-30 15:00:00 +0100"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1pzjj94/investigating_and_fixing_a_nasty_clone_bug/
 ---
 
 Recently I found myself battling with [another]({% post_url 2025-02-23-tokio-plus-prctl-equals-nasty-bug %}) nasty bug. It took me several hours to understand what is happening, and once I found it, it turned out that the cause of the bug is relevant to the [Ergonomic cloning](https://rust-lang.github.io/rust-project-goals/2025h2/ergonomic-rc.html) initiative that is currently being discussed a lot. So I thought that it would be a good candidate for a blog post.
