@@ -3,7 +3,7 @@ layout: "post"
 title: "1160 PRs to improve Rust in 2025"
 date: "2026-01-05 15:00:00 +0100"
 categories: rust rustc
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1q4srtz/1160_prs_to_improve_rust_in_2025
 ---
 
 The end of the year is a time for reflection, so I thought that I should take a look back at the
