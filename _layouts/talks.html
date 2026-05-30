@@ -1,0 +1,49 @@
+---
+layout: default
+---
+
+<div class="home">
+  <h1 class="page-heading">Talks</h1>
+
+  <p>
+  Slides, recordings and source code of my talks can be found <a href="https://github.com/Kobzol/talks/">here</a>.
+  </p>
+
+  {%- assign talks = site.talks | sort: "date" | reverse -%}
+  {%- if talks.size > 0 -%}
+  {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+  {%- assign talksByYear = talks | group_by_exp: "talk", "talk.date | date: '%Y'" -%}
+  {%- for year in talksByYear -%}
+  <h2>{{ year.name }}</h2>
+  <ul class="post-list">
+    {%- for talk in year.items -%}
+    <li>
+      <span class="post-meta">
+        {{ talk.date | date: date_format }}
+        {%- if talk.venue %}
+          &middot; {% if talk.venue_url %}<a href="{{ talk.venue_url }}">{{ talk.venue }}</a>{% else %}{{ talk.venue }}{% endif %}
+        {%- endif -%}
+        {%- if talk.slides %}
+          &middot; <a href="{{ talk.slides }}">slides</a>
+        {% endif -%}
+        {%- if talk.blog_post %}
+          &middot; <a href="{{ talk.blog_post }}">blog post</a>
+        {% endif -%}
+        {%- if talk.czech %}&middot; 🇨🇿{% endif -%}
+      </span>
+      <h3>
+        {%- if talk.link -%}
+          <a class="post-link" href="{{ talk.link }}">{{ talk.title | escape }}</a>
+        {%- else -%}
+          <span class="post-link">{{ talk.title | escape }}</span>
+        {%- endif -%}
+      </h3>
+      {%- if talk.content != "" %}
+        <div>{{ talk.content }}</div>
+      {% endif -%}
+    </li>
+    {%- endfor -%}
+  </ul>
+  {%- endfor -%}
+  {%- endif -%}
+</div>

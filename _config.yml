@@ -27,6 +27,14 @@ url: "https://kobzol.github.io" # the base hostname & protocol for your site, e.
 github_username: kobzol
 google_analytics: UA-176245622-1
 
+collections:
+  talks:
+    output: false
+
+header_pages:
+  - index.md
+  - talks.md
+
 # Build settings
 theme: minima
 plugins:
