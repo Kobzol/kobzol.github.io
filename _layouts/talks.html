@@ -11,9 +11,12 @@ layout: default
 
   {%- assign talks = site.talks | sort: "date" | reverse -%}
   {%- if talks.size > 0 -%}
+  {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+  {%- assign talksByYear = talks | group_by_exp: "talk", "talk.date | date: '%Y'" -%}
+  {%- for year in talksByYear -%}
+  <h2>{{ year.name }}</h2>
   <ul class="post-list">
-    {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-    {%- for talk in talks -%}
+    {%- for talk in year.items -%}
     <li>
       <span class="post-meta">
         {{ talk.date | date: date_format }}
@@ -41,5 +44,6 @@ layout: default
     </li>
     {%- endfor -%}
   </ul>
+  {%- endfor -%}
   {%- endif -%}
 </div>
