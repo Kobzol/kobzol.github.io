@@ -19,12 +19,16 @@ layout: default
         {%- if talk.slides %}
           &middot; <a href="{{ talk.slides }}">slides</a>
         {% endif -%}
+        {%- if talk.blog_post %}
+          &middot; <a href="{{ talk.blog_post }}">blog post</a>
+        {% endif -%}
+        {%- if talk.czech %}&middot; 🇨🇿{% endif -%}
       </span>
       <h3>
         {%- if talk.link -%}
           <a class="post-link" href="{{ talk.link }}">{{ talk.title | escape }}</a>
         {%- else -%}
-          {{ talk.title | escape }}
+          <span class="post-link">{{ talk.title | escape }}</span>
         {%- endif -%}
       </h3>
       {%- if talk.content != "" %}
