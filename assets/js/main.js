@@ -46,6 +46,17 @@ $(function() {
         });
     }
 
+    // Add anchor links to post headings
+    document.querySelectorAll('.post-content h1[id], .post-content h2[id], .post-content h3[id], .post-content h4[id], .post-content h5[id], .post-content h6[id]').forEach(function(heading) {
+        const anchor = document.createElement('a');
+        anchor.className = 'heading-anchor';
+        anchor.href = '#' + heading.id;
+        anchor.setAttribute('aria-label', 'Link to this heading');
+        anchor.setAttribute('title', 'Link to this heading');
+        anchor.textContent = '#';
+        heading.prepend(anchor);
+    });
+
     // Show footnote tooltip on hover of tooltip reference
     const footnoteLinks = document.querySelectorAll('a.footnote[rel="footnote"]');
 
