@@ -150,6 +150,31 @@ blockquote {
   color: var(--text-color);
 }
 
+/* Heading anchor links */
+.heading-anchor {
+  opacity: 0;
+  text-decoration: none;
+  margin-left: -1.2em;
+  padding-right: 0.2em;
+  font-weight: normal;
+  color: var(--link-color);
+  transition: opacity 0.15s;
+}
+
+.heading-anchor:visited {
+  color: var(--link-color);
+}
+
+.post-content h1:hover .heading-anchor,
+.post-content h2:hover .heading-anchor,
+.post-content h3:hover .heading-anchor,
+.post-content h4:hover .heading-anchor,
+.post-content h5:hover .heading-anchor,
+.post-content h6:hover .heading-anchor,
+.heading-anchor:focus {
+  opacity: 1;
+}
+
 /* Syntax highlighting adjustments for dark mode */
 [data-theme="dark"] .highlight {
   background: var(--code-bg);
