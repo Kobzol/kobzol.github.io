@@ -3,7 +3,7 @@ layout: "post"
 title: "How memory safety CVEs differ between Rust and C/C++"
 date: "2026-06-15 17:00:00 +0200"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1u6km19/how_memory_safety_cves_differ_between_rust_and_cc
 ---
 
 CVE is a database used for categorizing and reporting security vulnerabilities in software. There
