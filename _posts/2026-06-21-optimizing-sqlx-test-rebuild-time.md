@@ -3,7 +3,7 @@ layout: "post"
 title: "Optimizing #[sqlx::test] rebuild time"
 date: "2026-06-21 18:00:00 +0200"
 categories: rust
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1ubuw7i/optimizing_sqlxtest_rebuild_time/
 ---
 
 > You might find this post especially useful if you have a project with many `#[sqlx::test]` tests.
