@@ -105,7 +105,10 @@ This behavior can be pretty inconspicious, because at the start of the project, 
 (or at least, *faster*). But then, with each added test, and each added migration, the rebuild time
 slowly increases, so it creeps up on you.
 
-I tried if the experimental [proc macro caching](https://github.com/rust-lang/rust/pull/145354) feature that I landed in the compiler last year might help, but it didn't. Probably the time needed to compile the generated code dwarfs the time to run the proc macro itself, so it does not help if the proc macro itself is cached.
+~~I tried if the experimental [proc macro caching](https://github.com/rust-lang/rust/pull/145354) feature that I landed in the compiler last year might help, but it didn't. Probably the time needed to compile the generated code dwarfs the time to run the proc macro itself, so it does not help if the proc macro itself is cached.~~
+
+Nevermind: `#[sqlx::test]` is an *attribute*, not a *derive* macro, so this flag doesn't apply here.
+Thanks to `@futile` for the correction.
 
 ## What can be done about it
 
