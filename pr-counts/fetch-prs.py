@@ -1,6 +1,7 @@
 # /// script
 # dependencies = ["github3api"]
 # ///
+import calendar
 import dataclasses
 import json
 import os
@@ -21,8 +22,41 @@ class PullRequest:
     created_at: str
 
 
-def fetch_prs_opened_by_user(gh: GitHubAPI, username: str, year=2025):
-    """Fetch all pull requests opened by a user in a specific year."""
+@dataclasses.dataclass(frozen=True, order=True)
+class Month:
+    year: int
+    month: int
+
+
+def parse_months(months_arg: str) -> list[Month]:
+    """
+    Parse a comma-separated list of "YYYY" or "YYYY-MM" tokens into a sorted list
+    of unique Month values. A bare year expands to all twelve months of that year.
+    """
+    months: set[Month] = set()
+    for token in months_arg.split(","):
+        token = token.strip()
+        if not token:
+            continue
+        if "-" in token:
+            year_str, month_str = token.split("-")
+            months.add(Month(int(year_str), int(month_str)))
+        else:
+            year = int(token)
+            for month in range(1, 13):
+                months.add(Month(year, month))
+    return sorted(months)
+
+
+def label_for_months(months_arg: str) -> str:
+    return months_arg.replace(",", "_")
+
+
+def fetch_prs_opened_by_user(gh: GitHubAPI, username: str, months: list[Month]) -> dict:
+    """Fetch all pull requests opened by a user in the given months."""
+    months_set = set(months)
+    min_month = months[0]
+
     # Define queries outside the loop
     query_first_page = """
 query($login: String!) {
@@ -73,7 +107,7 @@ query($login: String!, $cursor: String!) {
 """
 
     prs_by_repo = defaultdict(list)
-    print(f"Fetching PRs for user '{username}' opened in {year}...")
+    print(f"Fetching PRs for user '{username}' opened in {months}...")
 
     total = 0
     cursor = None
@@ -99,8 +133,9 @@ query($login: String!, $cursor: String!) {
         for pr in nodes:
             created_at = datetime.fromisoformat(pr["createdAt"].replace("Z", "+00:00"))
 
-            # Check if PR was created in the target year
-            if created_at.year == year:
+            # Check if PR was created in one of the target months
+            pr_month = Month(created_at.year, created_at.month)
+            if pr_month in months_set:
                 pr_obj = PullRequest(
                     repo=pr["repository"]["nameWithOwner"],
                     number=pr["number"],
@@ -110,7 +145,7 @@ query($login: String!, $cursor: String!) {
                 )
                 prs_by_repo[pr_obj.repo].append(dataclasses.asdict(pr_obj))
                 total += 1
-            elif created_at.year < year:
+            elif pr_month < min_month:
                 stop = True
                 break
 
@@ -120,15 +155,19 @@ query($login: String!, $cursor: String!) {
         cursor = page_info["endCursor"]
 
     print(f"Total PRs: {total}")
-    with open(f"prs-{year}.json", "w") as f:
-        f.write(json.dumps(prs_by_repo, indent=4))
+    return prs_by_repo
 
 
-def fetch_prs_reviewed_by_user(gh: GitHubAPI, username: str, year=2025):
-    """Fetch all pull requests reviewed by a user in a specific year."""
-    # Define date range for the year
-    from_date = f"{year}-01-01T00:00:00Z"
-    to_date = f"{year}-12-31T23:59:59Z"
+def fetch_prs_reviewed_by_user(gh: GitHubAPI, username: str, months: list[Month]) -> dict:
+    """Fetch all pull requests reviewed by a user in the given months."""
+    months_set = set(months)
+    min_month = months[0]
+    max_month = months[-1]
+
+    # Define date range spanning the earliest to the latest requested month
+    from_date = f"{min_month.year:04d}-{min_month.month:02d}-01T00:00:00Z"
+    last_day = calendar.monthrange(max_month.year, max_month.month)[1]
+    to_date = f"{max_month.year:04d}-{max_month.month:02d}-{last_day:02d}T23:59:59Z"
 
     # GraphQL query for first page (without cursor)
     query_first_page = """
@@ -191,7 +230,7 @@ query($login: String!, $from: DateTime!, $to: DateTime!, $cursor: String!) {
 """
 
     prs_by_repo = defaultdict(list)
-    print(f"Fetching PRs reviewed by user '{username}' in {year}...")
+    print(f"Fetching PRs reviewed by user '{username}' in {months}...")
 
     total = 0
     cursor = None
@@ -225,6 +264,11 @@ query($login: String!, $from: DateTime!, $to: DateTime!, $cursor: String!) {
         for review in nodes:
             pr = review["pullRequest"]
             created_at = datetime.fromisoformat(pr["createdAt"].replace("Z", "+00:00"))
+            occurred_at = datetime.fromisoformat(review["occurredAt"].replace("Z", "+00:00"))
+
+            # Only keep reviews that actually occurred in one of the target months
+            if Month(occurred_at.year, occurred_at.month) not in months_set:
+                continue
 
             pr_obj = PullRequest(
                 repo=pr["repository"]["nameWithOwner"],
@@ -242,21 +286,25 @@ query($login: String!, $from: DateTime!, $to: DateTime!, $cursor: String!) {
         cursor = page_info["endCursor"]
 
     print(f"Total reviewed PRs: {total}")
-    with open(f"reviews-{year}.json", "w") as f:
-        f.write(json.dumps(prs_by_repo, indent=4))
+    return prs_by_repo
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python fetch-prs.py <github_username> [year]")
+    if len(sys.argv) < 3:
+        print("Usage: python fetch-prs.py <github_username> <months>")
+        print('  <months> is a comma-separated list of "YYYY" or "YYYY-MM" values, e.g. "2026-06,2026-07" or "2026"')
         sys.exit(1)
 
     username = sys.argv[1]
-    year = int(sys.argv[2]) if len(sys.argv) > 2 else 2025
+    months = parse_months(sys.argv[2])
+    label = label_for_months(sys.argv[2])
 
     gh = GitHubAPI(bearer_token=os.environ["GITHUB_TOKEN"])
-    fetch_prs_opened_by_user(gh, username, year)
-    fetch_prs_reviewed_by_user(gh, username, year)
+    opened_prs = fetch_prs_opened_by_user(gh, username, months)
+    reviewed_prs = fetch_prs_reviewed_by_user(gh, username, months)
+
+    with open(f"prs-{label}.json", "w") as f:
+        f.write(json.dumps({"pull-requests": opened_prs, "reviews": reviewed_prs}, indent=4))
 
 
 if __name__ == "__main__":
