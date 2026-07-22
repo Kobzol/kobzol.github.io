@@ -6,6 +6,7 @@ import dataclasses
 import json
 import os
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from typing import Literal
 
@@ -404,11 +405,11 @@ def fetch_github_comment_count_in_org(username: str, org: str, months: list[Mont
 
     print(f"Found {len(issues)} issues/PRs commented on by '{username}' in org '{org}'")
 
-    total_comments = 0
-    for i, issue in enumerate(issues):
+    def count_comments_for_issue(issue: dict) -> int:
         repo_full_name = issue["repository_url"].split("/repos/")[1]
         number = issue["number"]
 
+        count = 0
         comments_page = 1
         while True:
             response = requests.get(
@@ -424,14 +425,20 @@ def fetch_github_comment_count_in_org(username: str, org: str, months: list[Mont
                     continue
                 created_at = datetime.fromisoformat(comment["created_at"].replace("Z", "+00:00"))
                 if from_dt <= created_at <= to_dt:
-                    total_comments += 1
+                    count += 1
 
             if len(comments) < 100:
                 break
             comments_page += 1
 
-        if (i + 1) % 25 == 0:
-            print(f"Processed {i + 1}/{len(issues)} issues/PRs, comments so far: {total_comments}")
+        return count
+
+    total_comments = 0
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        for i, issue_comment_count in enumerate(executor.map(count_comments_for_issue, issues)):
+            total_comments += issue_comment_count
+            if (i + 1) % 25 == 0:
+                print(f"Processed {i + 1}/{len(issues)} issues/PRs, comments so far: {total_comments}")
 
     print(f"Total comments by '{username}' in org '{org}': {total_comments}")
     return total_comments
