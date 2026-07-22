@@ -13,7 +13,7 @@ IGNORED_REPOS = (
 )
 
 PR_LIST_MARKER = "<!-- pr-list -->"
-PR_STATS_MARKER = "<!-- pr-stats -->"
+PR_STATS_MARKER = "<!-- stats -->"
 
 
 def is_valid_repo(repo: str) -> bool:
@@ -25,10 +25,10 @@ def is_valid_repo(repo: str) -> bool:
     return True
 
 
-def load_data(path: str) -> tuple[dict, dict]:
+def load_data(path: str) -> tuple[dict, dict, dict]:
     with open(path) as f:
         data = json.loads(f.read())
-    return data["pull-requests"], data["reviews"]
+    return data["pull-requests"], data["reviews"], data["zulip"]
 
 
 def render_pr_list(prs: dict) -> str:
@@ -69,7 +69,7 @@ def compute_stats(prs: dict, reviewed_prs: dict) -> tuple[int, int, int, int]:
     return total_prs, total_rust_prs, total_reviewed_prs, total_reviewed_rust_prs
 
 
-def render_stats(prs: dict, reviewed_prs: dict, mode: str) -> str:
+def render_stats(prs: dict, reviewed_prs: dict, zulip_stats: dict, mode: str) -> str:
     total_prs, total_rust_prs, total_reviewed_prs, total_reviewed_rust_prs = compute_stats(prs, reviewed_prs)
 
     stream = io.StringIO()
@@ -82,6 +82,9 @@ def render_stats(prs: dict, reviewed_prs: dict, mode: str) -> str:
         print(f"- Reviewed **{total_reviewed_prs}** pull requests, of which **{total_reviewed_rust_prs}** "
               f"({(total_reviewed_rust_prs / total_reviewed_prs) * 100:.2f}%) were in Rust-related repositories.",
               file=stream)
+    zulip_public_message = zulip_stats["public_messages"]
+    zulip_private_message = zulip_stats["private_messages"]
+    print(f"- Sent **{zulip_public_message}** public and **{zulip_private_message}** private messages on the [Rust Zulip](https://rust-lang.zulipchat.com).", file=stream)
     print(file=stream)
     return stream.getvalue()
 
@@ -107,11 +110,11 @@ def insert_after_marker(post: str, marker: str, content: str) -> str:
     return post_modified
 
 
-def render_post(prs: dict, reviewed_prs: dict, post_path: str, mode: str):
+def render_post(prs: dict, reviewed_prs: dict, zulip_stats: dict, post_path: str, mode: str):
     with open(post_path) as f:
         post = f.read()
 
-    post = insert_after_marker(post, PR_STATS_MARKER, render_stats(prs, reviewed_prs, mode))
+    post = insert_after_marker(post, PR_STATS_MARKER, render_stats(prs, reviewed_prs, zulip_stats, mode))
     post = insert_after_marker(post, PR_LIST_MARKER, render_pr_list(prs))
 
     with open(post_path, "w") as f:
@@ -127,7 +130,7 @@ def main():
                               "total. If 'all', both the total and Rust-related counts are reported.")
     args = parser.parse_args()
 
-    prs, reviewed_prs = load_data(args.path)
+    prs, reviewed_prs, zulip_stats = load_data(args.path)
 
     total_prs, total_rust_prs, total_reviewed_prs, total_reviewed_rust_prs = compute_stats(prs, reviewed_prs)
     print(f"Total PRs: {total_prs}, total Rust PRs: {total_rust_prs}, "
@@ -135,7 +138,7 @@ def main():
     print(f"Total reviewed PRs: {total_reviewed_prs}, total reviewed Rust PRs: {total_reviewed_rust_prs}, "
           f"{(total_reviewed_rust_prs / total_reviewed_prs) * 100:.2f}% is Rust Project")
 
-    render_post(prs, reviewed_prs, args.post_path, args.mode)
+    render_post(prs, reviewed_prs, zulip_stats, args.post_path, args.mode)
 
 
 if __name__ == "__main__":

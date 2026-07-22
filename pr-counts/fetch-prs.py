@@ -1,15 +1,15 @@
 # /// script
-# dependencies = ["github3api"]
+# dependencies = ["github3api", "requests"]
 # ///
 import calendar
 import dataclasses
 import json
 import os
-import sys
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Literal
 
+import requests
 from github3api import GitHubAPI
 
 
@@ -289,22 +289,109 @@ query($login: String!, $from: DateTime!, $to: DateTime!, $cursor: String!) {
     return prs_by_repo
 
 
-def main():
-    if len(sys.argv) < 3:
-        print("Usage: python fetch-prs.py <github_username> <months>")
-        print('  <months> is a comma-separated list of "YYYY" or "YYYY-MM" values, e.g. "2026-06,2026-07" or "2026"')
-        sys.exit(1)
+def fetch_zulip_message_counts(zulip_id: int, months: list[Month]) -> dict:
+    """Fetch counts of private (DM) and public (stream) messages sent by a user
+    on the rust-lang.zulipchat.com Zulip server in the given months."""
+    zulip_username = os.environ["ZULIP_USER"]
+    zulip_token = os.environ["ZULIP_TOKEN"]
+    months_set = set(months)
+    min_month = months[0]
+    max_month = months[-1]
 
-    username = sys.argv[1]
-    months = parse_months(sys.argv[2])
-    label = label_for_months(sys.argv[2])
+    narrow = json.dumps([{"operator": "sender", "operand": zulip_id}])
+
+    # Anchor the first page at the start of the target range (Zulip 12.0+), instead of
+    # walking back from "newest" through every message posted after the target range.
+    anchor_date = f"{min_month.year:04d}-{min_month.month:02d}-01T00:00:00Z"
+
+    private_count = 0
+    public_count = 0
+    anchor = "date"
+    num_after = 1000
+    include_anchor = True
+    page_num = 0
+
+    print(f"Fetching Zulip messages for user id '{zulip_id}' in {months}...")
+
+    while True:
+        params = {
+            "anchor": anchor,
+            "anchor_date": anchor_date,
+            "num_before": 0,
+            "num_after": num_after,
+            "narrow": narrow,
+            "apply_markdown": "false",
+            "include_anchor": "true" if include_anchor else "false",
+        }
+
+        response = requests.get(
+            "https://rust-lang.zulipchat.com/api/v1/messages",
+            auth=(zulip_username, zulip_token),
+            params=params,
+        )
+        response.raise_for_status()
+        result = response.json()
+        messages = result["messages"]
+
+        print(f"Page {page_num}, fetched {len(messages)} Zulip messages")
+        page_num += 1
+
+        stop = False
+        for message in messages:
+            assert message["sender_id"] == zulip_id
+            sent_at = datetime.fromtimestamp(message["timestamp"], tz=timezone.utc)
+            message_month = Month(sent_at.year, sent_at.month)
+            if message_month in months_set:
+                if message["type"] == "private":
+                    private_count += 1
+                else:
+                    public_count += 1
+            elif message_month > max_month:
+                stop = True
+
+        if stop or result.get("found_newest") or not messages:
+            break
+
+        anchor = messages[-1]["id"]
+        include_anchor = False
+
+    print(f"Total Zulip messages: {private_count} private, {public_count} public")
+    return {"private_messages": private_count, "public_messages": public_count}
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("github_username")
+    parser.add_argument(
+        "months",
+        help='comma-separated list of "YYYY" or "YYYY-MM" values, e.g. "2026-06,2026-07" or "2026"',
+    )
+    parser.add_argument(
+        "--zulip-id",
+        type=int,
+        default=None,
+        help="Zulip user id; if set, also fetch message counts from rust-lang.zulipchat.com "
+             "(requires ZULIP_USER and ZULIP_TOKEN env vars)",
+    )
+    args = parser.parse_args()
+
+    username = args.github_username
+    months = parse_months(args.months)
+    label = label_for_months(args.months)
 
     gh = GitHubAPI(bearer_token=os.environ["GITHUB_TOKEN"])
     opened_prs = fetch_prs_opened_by_user(gh, username, months)
     reviewed_prs = fetch_prs_reviewed_by_user(gh, username, months)
 
-    with open(f"prs-{label}.json", "w") as f:
-        f.write(json.dumps({"pull-requests": opened_prs, "reviews": reviewed_prs}, indent=4))
+    output = {"pull-requests": opened_prs, "reviews": reviewed_prs}
+
+    if args.zulip_id is not None:
+        output["zulip"] = fetch_zulip_message_counts(args.zulip_id, months)
+
+    with open(f"data-{label}.json", "w") as f:
+        f.write(json.dumps(output, indent=4))
 
 
 if __name__ == "__main__":
