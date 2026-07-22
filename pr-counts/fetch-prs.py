@@ -359,6 +359,84 @@ def fetch_zulip_message_counts(zulip_id: int, months: list[Month]) -> dict:
     return {"private_messages": private_count, "public_messages": public_count}
 
 
+def fetch_github_comment_count_in_org(username: str, org: str, months: list[Month]) -> int:
+    """Fetch the exact number of GitHub issue/PR comments made by a user in the given
+    org during the given months, by searching for issues/PRs the user commented on and
+    then counting their actual comments on each one."""
+    token = os.environ["GITHUB_TOKEN"]
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json"}
+
+    min_month = months[0]
+    max_month = months[-1]
+    from_date = f"{min_month.year:04d}-{min_month.month:02d}-01T00:00:00Z"
+    last_day = calendar.monthrange(max_month.year, max_month.month)[1]
+    to_date = f"{max_month.year:04d}-{max_month.month:02d}-{last_day:02d}T23:59:59Z"
+    from_dt = datetime.fromisoformat(from_date.replace("Z", "+00:00"))
+    to_dt = datetime.fromisoformat(to_date.replace("Z", "+00:00"))
+
+    query = f"commenter:{username} org:{org}"
+
+    print(f"Searching issues/PRs commented on by '{username}' in org '{org}'...")
+
+    issues = []
+    page = 1
+    while True:
+        response = requests.get(
+            "https://api.github.com/search/issues",
+            headers=headers,
+            params={"q": query, "sort": "updated", "order": "desc", "per_page": 100, "page": page},
+        )
+        response.raise_for_status()
+        items = response.json()["items"]
+
+        stop = False
+        for item in items:
+            updated_at = datetime.fromisoformat(item["updated_at"].replace("Z", "+00:00"))
+            if updated_at < from_dt:
+                stop = True
+                break
+            issues.append(item)
+
+        print(f"Search page {page}, fetched {len(items)} issues/PRs, total so far: {len(issues)}")
+        if stop or len(items) < 100 or page >= 10:
+            break
+        page += 1
+
+    print(f"Found {len(issues)} issues/PRs commented on by '{username}' in org '{org}'")
+
+    total_comments = 0
+    for i, issue in enumerate(issues):
+        repo_full_name = issue["repository_url"].split("/repos/")[1]
+        number = issue["number"]
+
+        comments_page = 1
+        while True:
+            response = requests.get(
+                f"https://api.github.com/repos/{repo_full_name}/issues/{number}/comments",
+                headers=headers,
+                params={"since": from_date, "per_page": 100, "page": comments_page},
+            )
+            response.raise_for_status()
+            comments = response.json()
+
+            for comment in comments:
+                if comment["user"]["login"].lower() != username.lower():
+                    continue
+                created_at = datetime.fromisoformat(comment["created_at"].replace("Z", "+00:00"))
+                if from_dt <= created_at <= to_dt:
+                    total_comments += 1
+
+            if len(comments) < 100:
+                break
+            comments_page += 1
+
+        if (i + 1) % 25 == 0:
+            print(f"Processed {i + 1}/{len(issues)} issues/PRs, comments so far: {total_comments}")
+
+    print(f"Total comments by '{username}' in org '{org}': {total_comments}")
+    return total_comments
+
+
 def main():
     import argparse
 
@@ -389,6 +467,8 @@ def main():
 
     if args.zulip_id is not None:
         output["zulip"] = fetch_zulip_message_counts(args.zulip_id, months)
+
+    output["comment-count"] = fetch_github_comment_count_in_org(username, "rust-lang", months)
 
     with open(f"data-{label}.json", "w") as f:
         f.write(json.dumps(output, indent=4))
