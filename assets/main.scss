@@ -151,10 +151,20 @@ blockquote {
 }
 
 /* Heading anchor links */
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  position: relative;
+}
+
 .heading-anchor {
+  position: absolute;
+  right: 100%;
   opacity: 0;
   text-decoration: none;
-  margin-left: -1.2em;
   padding-right: 0.2em;
   font-weight: normal;
   color: var(--link-color);
