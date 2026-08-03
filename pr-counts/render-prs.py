@@ -40,6 +40,9 @@ def render_pr_list(prs: dict) -> str:
     items = sorted(items, key=lambda i: len(i[1]), reverse=True)
 
     stream = io.StringIO()
+    print(f'''<details markdown="1">
+<summary>List of opened PRs</summary>
+''', file=stream)
     for (repo, repo_prs) in items:
         suffix = "s" if len(repo_prs) > 1 else ""
         print(f"### {repo} ({len(repo_prs)} PR{suffix})", file=stream)
@@ -57,6 +60,7 @@ def render_pr_list(prs: dict) -> str:
                 row += f' (<span style="color: #8250DF;">{state}</span>)'
             print(row, file=stream)
         print(file=stream)
+    print('\n</details>\n', file=stream)
     return stream.getvalue()
 
 
