@@ -245,7 +245,7 @@ query($login: String!, $from: DateTime!, $to: DateTime!, $cursor: String!) {
 
     total = 0
     cursor = None
-    page_num = 0
+    page_num = 1
 
     while True:
         # Use different queries depending on whether we have a cursor
@@ -301,6 +301,102 @@ query($login: String!, $from: DateTime!, $to: DateTime!, $cursor: String!) {
     return prs_by_repo
 
 
+def fetch_prs_assigned_to_user(gh: GitHubAPI, username: str, repo: str, months: list[Month]) -> dict:
+    """Fetch all pull requests in the given repository opened in the given months
+    that the user is currently assigned to. In some repositories (e.g. rust-lang/rust),
+    PRs are usually approved via bors by the assigned reviewer, without leaving a formal
+    GitHub review."""
+    query = """
+query($query: String!, $cursor: String!) {
+  search(query: $query, type: ISSUE, first: 100, after: $cursor) {
+    issueCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      ... on PullRequest {
+        number
+        title
+        state
+        createdAt
+        additions
+        deletions
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+}
+"""
+
+    prs_by_repo = defaultdict(list)
+    print(f"Fetching PRs in {repo} assigned to user '{username}' opened in {months}...")
+
+    total = 0
+    # Search each month separately, because GitHub search returns at most 1000 results
+    for month in months:
+        last_day = calendar.monthrange(month.year, month.month)[1]
+        month_key = f"{month.year:04d}-{month.month:02d}"
+        # Exclude the user's own PRs, those are counted as opened PRs
+        search_query = (
+            f"repo:{repo} is:pr assignee:{username} -author:{username} "
+            f"created:{month_key}-01..{month_key}-{last_day:02d}"
+        )
+
+        cursor = None
+        page_num = 1
+        while True:
+            # github3api strips `after: $cursor` and `$cursor: String!` from the query
+            # when no cursor is passed
+            variables = {"query": search_query}
+            if cursor is not None:
+                variables["cursor"] = cursor
+            result = gh.graphql(query, variables)
+            search_data = result["data"]["search"]
+            page_info = search_data["pageInfo"]
+            nodes = search_data["nodes"]
+
+            print(f"{month_key} page {page_num}, fetched {len(nodes)} assigned PRs, total so far: {total}")
+            page_num += 1
+
+            for pr in nodes:
+                created_at = datetime.fromisoformat(pr["createdAt"].replace("Z", "+00:00"))
+                pr_obj = PullRequest(
+                    repo=pr["repository"]["nameWithOwner"],
+                    number=pr["number"],
+                    title=pr["title"],
+                    state=pr["state"].lower(),
+                    created_at=created_at.strftime("%d. %m."),
+                    modified_lines=max(pr["additions"], pr["deletions"])
+                )
+                prs_by_repo[pr_obj.repo].append(dataclasses.asdict(pr_obj))
+                total += 1
+
+            if not page_info["hasNextPage"]:
+                break
+
+            cursor = page_info["endCursor"]
+
+    print(f"Total assigned PRs: {total}")
+    return prs_by_repo
+
+
+def merge_reviewed_and_assigned(reviewed: dict, assigned: dict) -> dict:
+    """Combine reviewed PRs with assigned PRs, so that each PR is counted only once."""
+    prs: dict[tuple[str, int], dict] = {}
+    for repo_prs in [*reviewed.values(), *assigned.values()]:
+        for pr in repo_prs:
+            prs.setdefault((pr["repo"], pr["number"]), pr)
+
+    prs_by_repo = defaultdict(list)
+    for pr in prs.values():
+        prs_by_repo[pr["repo"]].append(pr)
+    print(f"Total reviewed or assigned PRs (deduplicated): {len(prs)}")
+    return prs_by_repo
+
+
 def fetch_zulip_message_counts(zulip_id: int, months: list[Month]) -> dict:
     """Fetch counts of private (DM) and public (stream) messages sent by a user
     on the rust-lang.zulipchat.com Zulip server in the given months."""
@@ -321,7 +417,7 @@ def fetch_zulip_message_counts(zulip_id: int, months: list[Month]) -> dict:
     anchor = "date"
     num_after = 1000
     include_anchor = True
-    page_num = 0
+    page_num = 1
 
     print(f"Fetching Zulip messages for user id '{zulip_id}' in {months}...")
 
@@ -479,7 +575,10 @@ def main():
 
     gh = GitHubAPI(bearer_token=os.environ["GITHUB_TOKEN"])
     opened_prs = fetch_prs_opened_by_user(gh, username, months)
-    reviewed_prs = fetch_prs_reviewed_by_user(gh, username, months)
+    reviewed_prs = merge_reviewed_and_assigned(
+        fetch_prs_reviewed_by_user(gh, username, months),
+        fetch_prs_assigned_to_user(gh, username, "rust-lang/rust", months),
+    )
 
     output = {"pull-requests": opened_prs, "reviews": reviewed_prs}
 
