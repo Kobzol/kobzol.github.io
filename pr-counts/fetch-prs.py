@@ -21,6 +21,7 @@ class PullRequest:
     title: str
     state: Literal["merged", "closed", "open"]
     created_at: str
+    modified_lines: int
 
 
 @dataclasses.dataclass(frozen=True, order=True)
@@ -70,6 +71,8 @@ query($login: String!) {
         title
         url
         state
+        additions
+        deletions
         repository {
           nameWithOwner
         }
@@ -94,6 +97,8 @@ query($login: String!, $cursor: String!) {
         title
         url
         state
+        additions
+        deletions
         repository {
           nameWithOwner
         }
@@ -142,7 +147,8 @@ query($login: String!, $cursor: String!) {
                     number=pr["number"],
                     title=pr["title"],
                     state=pr["state"].lower(),
-                    created_at=created_at.strftime("%d. %m.")
+                    created_at=created_at.strftime("%d. %m."),
+                    modified_lines=max(pr["additions"], pr["deletions"])
                 )
                 prs_by_repo[pr_obj.repo].append(dataclasses.asdict(pr_obj))
                 total += 1
@@ -188,6 +194,8 @@ query($login: String!, $from: DateTime!, $to: DateTime!) {
             url
             state
             createdAt
+            additions
+            deletions
             repository {
               nameWithOwner
             }
@@ -218,6 +226,8 @@ query($login: String!, $from: DateTime!, $to: DateTime!, $cursor: String!) {
             url
             state
             createdAt
+            additions
+            deletions
             repository {
               nameWithOwner
             }
@@ -276,7 +286,8 @@ query($login: String!, $from: DateTime!, $to: DateTime!, $cursor: String!) {
                 number=pr["number"],
                 title=pr["title"],
                 state=pr["state"].lower(),
-                created_at=created_at.strftime("%d. %m.")
+                created_at=created_at.strftime("%d. %m."),
+                modified_lines=max(pr["additions"], pr["deletions"])
             )
             prs_by_repo[pr_obj.repo].append(dataclasses.asdict(pr_obj))
             total += 1

@@ -64,6 +64,14 @@ def render_pr_list(prs: dict) -> str:
     return stream.getvalue()
 
 
+def median_modified_lines(prs: dict) -> float:
+    all_prs = [pr for repo_prs in prs.values() for pr in repo_prs]
+    if not all_prs:
+        return 0.0
+    modified = sorted(pr["modified_lines"] for pr in all_prs)
+    return modified[len(modified) // 2]
+
+
 def compute_stats(prs: dict, reviewed_prs: dict) -> tuple[int, int, int, int]:
     total_prs = sum(len(v) for v in prs.values())
     rust_prs = {k: v for (k, v) in prs.items() if is_valid_repo(k)}
@@ -79,13 +87,19 @@ def compute_stats(prs: dict, reviewed_prs: dict) -> tuple[int, int, int, int]:
 def render_stats(prs: dict, reviewed_prs: dict, comment_count: int, zulip_stats: dict, mode: str) -> str:
     total_prs, total_rust_prs, total_reviewed_prs, total_reviewed_rust_prs = compute_stats(prs, reviewed_prs)
 
+    rust_prs = {k: v for (k, v) in prs.items() if is_valid_repo(k)}
+
     stream = io.StringIO()
     if mode == "rust-lang":
+        median = median_modified_lines(rust_prs)
         print(f"- Opened **{total_rust_prs}** pull requests in Rust-related repositories.", file=stream)
+        print(f"  - With a median of **{median:.0f}** modified lines per pull request.", file=stream)
         print(f"- Reviewed **{total_reviewed_rust_prs}** pull requests in Rust-related repositories.", file=stream)
     else:
+        median = median_modified_lines(prs)
         print(f"- Opened **{total_prs}** pull requests, of which **{total_rust_prs}** "
-              f"({(total_rust_prs / total_prs) * 100:.2f}%) were in Rust-related repositories.", file=stream)
+              f"({(total_rust_prs / total_prs) * 100:.2f}%) were in Rust-related repositories, with a median of "
+              f"**{median:.0f}** modified lines per pull request.", file=stream)
         print(f"- Reviewed **{total_reviewed_prs}** pull requests, of which **{total_reviewed_rust_prs}** "
               f"({(total_reviewed_rust_prs / total_reviewed_prs) * 100:.2f}%) were in Rust-related repositories.",
               file=stream)
@@ -133,7 +147,7 @@ def main():
     parser = argparse.ArgumentParser(description="Render fetched PR/review data into a blog post.")
     parser.add_argument("path", help="Path to the fetched data")
     parser.add_argument("post_path", help="Path to the blog post markdown file to render the data into")
-    parser.add_argument("--mode", choices=["all", "rust-lang"], default="all",
+    parser.add_argument("--mode", choices=["all", "rust-lang"], default="rust-lang",
                          help="If 'rust-lang', the PR stats only cover Rust-related repositories and omit the "
                               "total. If 'all', both the total and Rust-related counts are reported.")
     args = parser.parse_args()
