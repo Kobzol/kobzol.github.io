@@ -31,6 +31,18 @@ collections:
   talks:
     output: false
 
+# Default preview image for social media (og:image/twitter:image via jekyll-seo-tag).
+# Without it, LinkedIn picks the first image on the page (often an emoji).
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/avatar.jpeg
+
+# Use a small square card, since the avatar is not a wide banner image.
+twitter:
+  card: summary
+
 header_pages:
   - index.md
   - talks.md
