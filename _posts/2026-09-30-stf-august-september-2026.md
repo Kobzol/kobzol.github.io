@@ -13,7 +13,7 @@ This post details my open source Rust work done in {{ page.month_range }}.
 
 Here's an index for simpler navigation:
 
-- [Reducing target directory size](#reducing-target-directory-size-with--cembed-metadata)
+- [Reducing target directory size](#reducing-target-directory-size)
 - [Compile time improvements](#compile-time-improvements)
   - [Trying to optimize the Rust parser](#trying-to-optimize-the-rust-parser)
   - [Making Polonius faster](#making-polonius-faster)
