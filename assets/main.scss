@@ -150,6 +150,16 @@ blockquote {
   color: var(--text-color);
 }
 
+/* Make inline code in headings match the heading size */
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+  font-size: inherit;
+}
+
 /* Heading anchor links */
 .post-content h1,
 .post-content h2,
