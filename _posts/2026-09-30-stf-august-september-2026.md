@@ -4,7 +4,7 @@ title: "Upstream Rust maintenance report (August-September 2026)"
 date: "2026-09-30 15:00:00 +0200"
 categories: rust
 month_range: August and September 2026
-#reddit_link: TODO
+reddit_link: https://www.reddit.com/r/rust/comments/1wu5l6y/upstream_rust_maintenance_report_augustseptember/
 ---
 
 As noted in my [previous report]({% post_url 2026-08-03-stf-june-july-2026 %}), I am currently working on the open source Rust toolchain as a [Sovereign Tech Fellow][stf-fellowship-2026]. Every two months, I'm putting out a report of my open source work done in that period. This is the second installment of this series. Same as the last time, I'll try to pick a few highlights, summarize the rest of the stuff that I worked on, and also provide contribution statistics and a raw list of opened PRs.
