@@ -40,8 +40,6 @@ The good news is that we haven't really heard any large complaints or issues abo
 
 Thanks to that experiment, I discussed moving forward with the Cargo team, and opened a [stabilization report][embed-metadata-rust-stabilization-report] for the compiler side of the feature (turning the unstable `-Zembed-metadata` flag into a stable `-Cembed-metadata` flag), which is now in [FCP vote](https://github.com/rust-lang/rust/pull/163436#issuecomment-5889363144) :tada:. Soon after, [Weihang Lo][weihanglo] opened a separate [Cargo stabilization report][embed-metadata-cargo-stabilization-report] for the Cargo side of the feature (passing `-Cembed-metadata=no` to `rustc` by default). There are some remaining [questions](https://rust-lang.zulipchat.com/#narrow/channel/246057-t-cargo/topic/Usage.20of.20-Zno-embed-metadata/near/627845724) about how does this affect Cargo's stability story about `.rlib`, `.dylib  and`.rmeta` artifacts, but I think that this should not block the compiler side of the stabilization.
 
-*[FCP]: Final Comment Period
-
 Since Cargo is already using the unstable `-Zembed-metadata` flag *by default* on nightly, and Rust's own build system is also making use of that flag, simply moving `-Zembed-metadata` to `-Cembed-metadata`, which is what we would normally do, would immediately break nightly users, unless we managed to synchronize that change across both `rustc` and Cargo atomically, which is not trivial at the moment. The plan is thus to keep supporting both `-Zembed-metadata` and `-Cembed-metadata` for some time, to allow users to migrate to the stable version of the flag, and then finally remove the unstable flag.
 
 This is quite exciting, because it looks like we might be finally close to removing the duplication of Rust metadata on disk, which existed in Rust for almost 10 years, and was unnecessarily inflating the size of the `target` directory.
@@ -65,8 +63,6 @@ Apart from the high-level areas that I describe below, I also worked on some ran
 - Applied LTO to Cranelift in [rust#163412]. This didn't help all that much. I also want to try to apply PGO to Cranelift, which I hope will help more.
 - Tried to reduce the size of macro-generated code in the `tracing` crate in [tokio-rs/tracing#3603], because I saw a lot of unnecessary generated code duplication there in bors. But it seems that `tracing` has been unmaintained for some time, so I'm not sure if anyone will take a look at it.
 
-*[PGO]: Profile-Guided Optimization
-
 [escape-std]: https://github.com/rust-lang/rust/pull/159916
 [remove-clone-perf]: https://perf.rust-lang.org/compare.html?start=3cabe36ceb022e2f56d4d330b1e2886f31117f18&end=70a39cfb7b741e95fcb6af8b15f5f694a3c2b271&stat=instructions:u
 [allocator-stabilization]: https://github.com/rust-lang/rust/pull/156882
@@ -81,8 +77,6 @@ I wanted to try using a similar approach for tokenization and parsing also in th
 Today, the Rust lexer and parser represent tokens using essentially a tree representation. [Token trees][token-tree] are stored in a `Vec`, where each tree can either be a leaf token (like `+`) or a delimited group of nested trees (like `(1 + 2)`), which is stored in a separate `Vec`. In other words, everytime the parser encounters parentheses, braces or brackets in a Rust file, it will allocate a new `Vec` on the heap. As you might imagine, this is not terribly efficient, neither time-wise, nor memory-wise.
 
 I tried to change that to use a flat representation, where all tokens, including delimited sequences, are stored in one single `Vec`, to avoid all those tiny allocations. Changing the lexer was very simple, and locally produced ~30% wins in terms of lexing performance, which was nice. However, moving this change up to the parser, macro expansion and AST handling was quite… involved[^lexer-only]. It was not really feasible to change the representation everywhere at once, because there is *a lot* of code that accesses the [`TokenStream`][token-stream] type, which abstracts the `Vec` of token trees. So I had to create a second implementation on the side (using the flat `Vec` of tokens), reimplement all the old functionality using the flat token structure and implement conversion functions in both directions (from flat to nested trees and from nested to flat trees). Then I had to incrementally migrate usages of `TokenStream` in the compiler to the new representation, by moving the conversions to higher and higher-level call-sites, until all conversions were gone.
-
-*[AST]: Abstract Syntax Tree
 
 [^lexer-only]: Note that it doesn't work to keep this change local *only* to the lexer, because it produces the same tokens that the parser and the AST then works with. Using the flat representation in the lexer, and another representation in the parser, requires converting between them, which makes compilation slower overall, even if lexing is sped up (I tried).
 
@@ -187,8 +181,6 @@ We also landed one long-standing feature request and one infrastructure improvem
 The long-standing feature request is the automation of something that we call "r=me after PR CI passes". When approving PRs in the `rust-lang/rust` repository, it was quite common for the reviewer to want to approve a PR for which the PR CI hasn't finished yet. We didn't have any automation for that, because we use our own merge queue implementation (bors), so we cannot use GitHub's built-in tooling for this. So the PR author had to wait until PR CI became green, and then approve the PR on behalf of the approver. This was annoying; people sometimes forgot to approve the PR or had to keep a tab open until the CI finished. There was an [open issue][homu-issue] about this from 2019 in [homu], the previous merge queue implementation.
 
 Since we finally [switched][bors-talk] from homu to bors at the start of this year, it finally became realistic to implement this feature, though it took us a few months before we figured out the right design for it and found the time to implement it. [Sakibul Islam][sakib-25800], my former GSoC mentee, who is now a member of the [bors team], single-handedly [implemented][bors-tentative-approvals] and tested the feature (I have to say that it was a joy to review this PR!). Reviewers can thus now simply write `@bors r+` and let bors worry about PR CI passing or failing, without having to babysit the PR.
-
-*[GSoC]: Google Summer of Code
 
 The infrastructure improvement that I mentioned is that rollups are now unrolled by bors. Oh wow, what a sentence! Rollups are
 PRs that batch multiple other PRs together to amortize the cost of running CI. After they are merged, we "unroll" them by producing compiler artifacts for each separate PR merged with the previous `main` commit, so that we can run performance benchmarks on each PR separately, to determine which rolled-up PR caused a performance regression (if there are any)[^rollup-ci-cost].
@@ -346,15 +338,15 @@ Below you can find some statistics and a list of PRs that I opened during {{ pag
 
 <!-- stats -->
 
-- Opened **256** pull requests in Rust-related repositories.
-  - With a median of **21** modified lines per pull request.
-- Reviewed **207** pull requests in Rust-related repositories.
-- Sent **872** comments in the `rust-lang` GitHub organization.
-- Sent **2226** public and **1880** private messages on the [Rust Zulip](https://rust-lang.zulipchat.com).
+- Opened **262** pull requests in Rust-related repositories.
+  - With a median of **20** modified lines per pull request.
+- Reviewed **214** pull requests in Rust-related repositories.
+- Sent **889** comments in the `rust-lang` GitHub organization.
+- Sent **2282** public and **1942** private messages on the [Rust Zulip](https://rust-lang.zulipchat.com).
 
 <!-- commentary -->
 
-I want to provide a bit of context regarding the statistics above. After my [previous report]({% post_url 2026-08-03-stf-june-july-2026 %}), where I wrote that I opened 162 PRs in two months, some people reached out to me and essentially asked me whether I am OK :laughing: And that I shouldn't overwork myself. Given that in this report, that number is almost 100 PRs higher, I thought that I should explain it a bit.
+I want to provide a bit of context regarding the statistics above. After my [previous report]({% post_url 2026-08-03-stf-june-july-2026 %}), where I wrote that I opened 162 PRs in two months, some people reached out to me and essentially asked me whether I am OK :laughing: And that I shouldn't overwork myself. Given that in this report, that number is (exactly!) 100 PRs higher, I thought that I should explain it a bit.
 
 Those numbers of PRs are not produced by me using LLMs (as I explained [previously]({% post_url 2026-08-03-stf-june-july-2026 %}#conclusion), I almost never use them for code that gets committed to git) nor by me being a 10x engineer working 24/7.  I simply open a large number of usually very small PRs across many projects, given the nature of work that I do in the Rust Project, which often deals with fixing CI, improving infrastructure and tooling, improving docs, etc. I don't push out 5 big new features every day. That's why I included the median[^average] of modified lines in my PR, to get across the idea that most of my PRs are very small. So take the numbers above with a grain of salt. I mostly put them here for my own historical record.
 
@@ -365,7 +357,7 @@ Those numbers of PRs are not produced by me using LLMs (as I explained [previous
 <details markdown="1">
 <summary>List of opened PRs</summary>
 
-### rust-lang/rust (70 PRs)
+### rust-lang/rust (71 PRs)
 - [#160421](https://github.com/rust-lang/rust/pull/160421): Do not use -Werror when building rustc_llvm with GCC (<span style="color: red;">closed</span>)
 - [#160427](https://github.com/rust-lang/rust/pull/160427): Run try builds on EC2 by default (<span style="color: #8250DF;">merged</span>)
 - [#160434](https://github.com/rust-lang/rust/pull/160434): Avoid Docker push when the image did not change (<span style="color: #8250DF;">merged</span>)
@@ -430,14 +422,15 @@ Those numbers of PRs are not produced by me using LLMs (as I explained [previous
 - [#162777](https://github.com/rust-lang/rust/pull/162777): Remove allocation from `mbe::quoted::parse` (<span style="color: red;">closed</span>)
 - [#162780](https://github.com/rust-lang/rust/pull/162780): Use `-Clinker-plugin-lto` in bootstrap (<span style="color: red;">closed</span>)
 - [#162848](https://github.com/rust-lang/rust/pull/162848): Use 2 parallel frontend threads by default on the nightly and dev channel (<span style="color: green;">open</span>)
-- [#163212](https://github.com/rust-lang/rust/pull/163212): rustfmt subtree update (<span style="color: green;">open</span>)
+- [#163212](https://github.com/rust-lang/rust/pull/163212): rustfmt subtree update (<span style="color: red;">closed</span>)
 - [#163412](https://github.com/rust-lang/rust/pull/163412): Apply LTO to Cranelift and GCC codegen backends (<span style="color: green;">open</span>)
 - [#163433](https://github.com/rust-lang/rust/pull/163433): Support also `try-jobs:` to specify custom try jobs (<span style="color: #8250DF;">merged</span>)
 - [#163436](https://github.com/rust-lang/rust/pull/163436): Stabilize `-Zembed-metadata` (<span style="color: green;">open</span>)
 - [#163444](https://github.com/rust-lang/rust/pull/163444): Add `stable_rustc` helper in `run-make-support` (<span style="color: #8250DF;">merged</span>)
 - [#163452](https://github.com/rust-lang/rust/pull/163452): Use newtype enums for representing frontend and backend jobs (<span style="color: green;">open</span>)
+- [#163533](https://github.com/rust-lang/rust/pull/163533): Run cg_gcc tests with the correct compiler (<span style="color: green;">open</span>)
 
-### rust-lang/team (35 PRs)
+### rust-lang/team (36 PRs)
 - [#2648](https://github.com/rust-lang/team/pull/2648): Move inactive t-triage members to alumni (<span style="color: #8250DF;">merged</span>)
 - [#2649](https://github.com/rust-lang/team/pull/2649): Add Zulip topic for the funding team and MiRs (<span style="color: #8250DF;">merged</span>)
 - [#2662](https://github.com/rust-lang/team/pull/2662): Configure branches for unrolled perf builds for bors (<span style="color: #8250DF;">merged</span>)
@@ -473,6 +466,43 @@ Those numbers of PRs are not produced by me using LLMs (as I explained [previous
 - [#2789](https://github.com/rust-lang/team/pull/2789): Manage Council private Zulip stream (<span style="color: #8250DF;">merged</span>)
 - [#2792](https://github.com/rust-lang/team/pull/2792): Sort bypass actors (<span style="color: #8250DF;">merged</span>)
 - [#2793](https://github.com/rust-lang/team/pull/2793): Create `trusted-contributors` team (<span style="color: #8250DF;">merged</span>)
+- [#2795](https://github.com/rust-lang/team/pull/2795): Add Predrag to trusted-contributors (<span style="color: green;">open</span>)
+
+### rust-lang/bors (34 PRs)
+- [#799](https://github.com/rust-lang/bors/pull/799): Tag EC2 instances launched by bors (<span style="color: #8250DF;">merged</span>)
+- [#800](https://github.com/rust-lang/bors/pull/800): Add web page with EC2 instance list (<span style="color: #8250DF;">merged</span>)
+- [#801](https://github.com/rust-lang/bors/pull/801): Add links to the queue page (<span style="color: #8250DF;">merged</span>)
+- [#802](https://github.com/rust-lang/bors/pull/802): Implement backfilling of EC2 instances (<span style="color: #8250DF;">merged</span>)
+- [#803](https://github.com/rust-lang/bors/pull/803): Improve layout of pending builds table (<span style="color: #8250DF;">merged</span>)
+- [#804](https://github.com/rust-lang/bors/pull/804): Strip auto/try job prefixes (<span style="color: #8250DF;">merged</span>)
+- [#806](https://github.com/rust-lang/bors/pull/806): Try to start EC2 instances on any branch (<span style="color: #8250DF;">merged</span>)
+- [#807](https://github.com/rust-lang/bors/pull/807): Reload in-memory job cache when bors starts (<span style="color: #8250DF;">merged</span>)
+- [#808](https://github.com/rust-lang/bors/pull/808): Document Zulip posting and EC2 instance spawning (<span style="color: #8250DF;">merged</span>)
+- [#809](https://github.com/rust-lang/bors/pull/809): Only consider workflow run webhooks with the `push` event (<span style="color: #8250DF;">merged</span>)
+- [#812](https://github.com/rust-lang/bors/pull/812): Allow opting out of the maximum try job limit (<span style="color: #8250DF;">merged</span>)
+- [#813](https://github.com/rust-lang/bors/pull/813): Add hint about `@bors try nolimit` (<span style="color: #8250DF;">merged</span>)
+- [#815](https://github.com/rust-lang/bors/pull/815): Add a hint about retrying PR CI when someone uses `@bors retry` in an invalid state (<span style="color: #8250DF;">merged</span>)
+- [#816](https://github.com/rust-lang/bors/pull/816): Store `pr_number` field in the `build` table (<span style="color: #8250DF;">merged</span>)
+- [#817](https://github.com/rust-lang/bors/pull/817): Add rollup unrolling (<span style="color: #8250DF;">merged</span>)
+- [#818](https://github.com/rust-lang/bors/pull/818): Add a hint to `@bors try cancel` (<span style="color: #8250DF;">merged</span>)
+- [#819](https://github.com/rust-lang/bors/pull/819): Trigger the merge queue when the priority of a PR changes (<span style="color: #8250DF;">merged</span>)
+- [#820](https://github.com/rust-lang/bors/pull/820): Correctly parse unrolled member build kind from EC2 instance tags (<span style="color: #8250DF;">merged</span>)
+- [#821](https://github.com/rust-lang/bors/pull/821): Fix termination of multiple EC2 instances (<span style="color: #8250DF;">merged</span>)
+- [#823](https://github.com/rust-lang/bors/pull/823): Close PRs in DB that disappear from GitHub (<span style="color: #8250DF;">merged</span>)
+- [#827](https://github.com/rust-lang/bors/pull/827): Ignore homu-ignore blocks in squashed commit messages (<span style="color: #8250DF;">merged</span>)
+- [#833](https://github.com/rust-lang/bors/pull/833): Add a sanity check for valid bors config before merging a PR (<span style="color: #8250DF;">merged</span>)
+- [#834](https://github.com/rust-lang/bors/pull/834): Fix decoding base64 GitHub contents (<span style="color: #8250DF;">merged</span>)
+- [#837](https://github.com/rust-lang/bors/pull/837): Check that EC2 instance is in `allowed_instances` (<span style="color: #8250DF;">merged</span>)
+- [#838](https://github.com/rust-lang/bors/pull/838): Add in-memory cache of spawned EC2 instances (<span style="color: #8250DF;">merged</span>)
+- [#839](https://github.com/rust-lang/bors/pull/839): Check config validity post merge (<span style="color: #8250DF;">merged</span>)
+- [#850](https://github.com/rust-lang/bors/pull/850): Do not link to GitHub PRs when doing rollup mergeability check (<span style="color: #8250DF;">merged</span>)
+- [#854](https://github.com/rust-lang/bors/pull/854): Add a test for not merging a tentatively approved PR (<span style="color: #8250DF;">merged</span>)
+- [#858](https://github.com/rust-lang/bors/pull/858): Upgrade tentative approvals if the PR was already fully approved (<span style="color: #8250DF;">merged</span>)
+- [#859](https://github.com/rust-lang/bors/pull/859): Make tentative approvals less obtrusive (<span style="color: #8250DF;">merged</span>)
+- [#862](https://github.com/rust-lang/bors/pull/862): Apply approval labels eagerly when a PR is tentatively approved (<span style="color: #8250DF;">merged</span>)
+- [#863](https://github.com/rust-lang/bors/pull/863): Support also the `try-jobs` custom try job marker (<span style="color: #8250DF;">merged</span>)
+- [#864](https://github.com/rust-lang/bors/pull/864): Set `approval_tentative` to `FALSE` in `unapprove_pull_request_if_sha_changed` (<span style="color: #8250DF;">merged</span>)
+- [#865](https://github.com/rust-lang/bors/pull/865): Hotfix database state (<span style="color: red;">closed</span>)
 
 ### rust-lang/rustc-perf (33 PRs)
 - [#2520](https://github.com/rust-lang/rustc-perf/pull/2520): Add support for bare rustc invocation with `--print-sysroot` (<span style="color: #8250DF;">merged</span>)
@@ -509,41 +539,7 @@ Those numbers of PRs are not produced by me using LLMs (as I explained [previous
 - [#2594](https://github.com/rust-lang/rustc-perf/pull/2594): Make `parse_benchmarks` infallible (<span style="color: #8250DF;">merged</span>)
 - [#2596](https://github.com/rust-lang/rustc-perf/pull/2596): Improve support for different codegen backends (<span style="color: #8250DF;">merged</span>)
 
-### rust-lang/bors (32 PRs)
-- [#799](https://github.com/rust-lang/bors/pull/799): Tag EC2 instances launched by bors (<span style="color: #8250DF;">merged</span>)
-- [#800](https://github.com/rust-lang/bors/pull/800): Add web page with EC2 instance list (<span style="color: #8250DF;">merged</span>)
-- [#801](https://github.com/rust-lang/bors/pull/801): Add links to the queue page (<span style="color: #8250DF;">merged</span>)
-- [#802](https://github.com/rust-lang/bors/pull/802): Implement backfilling of EC2 instances (<span style="color: #8250DF;">merged</span>)
-- [#803](https://github.com/rust-lang/bors/pull/803): Improve layout of pending builds table (<span style="color: #8250DF;">merged</span>)
-- [#804](https://github.com/rust-lang/bors/pull/804): Strip auto/try job prefixes (<span style="color: #8250DF;">merged</span>)
-- [#806](https://github.com/rust-lang/bors/pull/806): Try to start EC2 instances on any branch (<span style="color: #8250DF;">merged</span>)
-- [#807](https://github.com/rust-lang/bors/pull/807): Reload in-memory job cache when bors starts (<span style="color: #8250DF;">merged</span>)
-- [#808](https://github.com/rust-lang/bors/pull/808): Document Zulip posting and EC2 instance spawning (<span style="color: #8250DF;">merged</span>)
-- [#809](https://github.com/rust-lang/bors/pull/809): Only consider workflow run webhooks with the `push` event (<span style="color: #8250DF;">merged</span>)
-- [#812](https://github.com/rust-lang/bors/pull/812): Allow opting out of the maximum try job limit (<span style="color: #8250DF;">merged</span>)
-- [#813](https://github.com/rust-lang/bors/pull/813): Add hint about `@bors try nolimit` (<span style="color: #8250DF;">merged</span>)
-- [#815](https://github.com/rust-lang/bors/pull/815): Add a hint about retrying PR CI when someone uses `@bors retry` in an invalid state (<span style="color: #8250DF;">merged</span>)
-- [#816](https://github.com/rust-lang/bors/pull/816): Store `pr_number` field in the `build` table (<span style="color: #8250DF;">merged</span>)
-- [#817](https://github.com/rust-lang/bors/pull/817): Add rollup unrolling (<span style="color: #8250DF;">merged</span>)
-- [#818](https://github.com/rust-lang/bors/pull/818): Add a hint to `@bors try cancel` (<span style="color: #8250DF;">merged</span>)
-- [#819](https://github.com/rust-lang/bors/pull/819): Trigger the merge queue when the priority of a PR changes (<span style="color: #8250DF;">merged</span>)
-- [#820](https://github.com/rust-lang/bors/pull/820): Correctly parse unrolled member build kind from EC2 instance tags (<span style="color: #8250DF;">merged</span>)
-- [#821](https://github.com/rust-lang/bors/pull/821): Fix termination of multiple EC2 instances (<span style="color: #8250DF;">merged</span>)
-- [#823](https://github.com/rust-lang/bors/pull/823): Close PRs in DB that disappear from GitHub (<span style="color: #8250DF;">merged</span>)
-- [#827](https://github.com/rust-lang/bors/pull/827): Ignore homu-ignore blocks in squashed commit messages (<span style="color: #8250DF;">merged</span>)
-- [#833](https://github.com/rust-lang/bors/pull/833): Add a sanity check for valid bors config before merging a PR (<span style="color: #8250DF;">merged</span>)
-- [#834](https://github.com/rust-lang/bors/pull/834): Fix decoding base64 GitHub contents (<span style="color: #8250DF;">merged</span>)
-- [#837](https://github.com/rust-lang/bors/pull/837): Check that EC2 instance is in `allowed_instances` (<span style="color: #8250DF;">merged</span>)
-- [#838](https://github.com/rust-lang/bors/pull/838): Add in-memory cache of spawned EC2 instances (<span style="color: #8250DF;">merged</span>)
-- [#839](https://github.com/rust-lang/bors/pull/839): Check config validity post merge (<span style="color: #8250DF;">merged</span>)
-- [#850](https://github.com/rust-lang/bors/pull/850): Do not link to GitHub PRs when doing rollup mergeability check (<span style="color: #8250DF;">merged</span>)
-- [#854](https://github.com/rust-lang/bors/pull/854): Add a test for not merging a tentatively approved PR (<span style="color: #8250DF;">merged</span>)
-- [#858](https://github.com/rust-lang/bors/pull/858): Upgrade tentative approvals if the PR was already fully approved (<span style="color: #8250DF;">merged</span>)
-- [#859](https://github.com/rust-lang/bors/pull/859): Make tentative approvals less obtrusive (<span style="color: #8250DF;">merged</span>)
-- [#862](https://github.com/rust-lang/bors/pull/862): Apply approval labels eagerly when a PR is tentatively approved (<span style="color: #8250DF;">merged</span>)
-- [#863](https://github.com/rust-lang/bors/pull/863): Support also the `try-jobs` custom try job marker (<span style="color: #8250DF;">merged</span>)
-
-### rust-lang/thanks (24 PRs)
+### rust-lang/thanks (26 PRs)
 - [#109](https://github.com/rust-lang/thanks/pull/109): Run Clippy and rustfmt on CI (<span style="color: #8250DF;">merged</span>)
 - [#110](https://github.com/rust-lang/thanks/pull/110): Write all-time data in CSV output mode (<span style="color: #8250DF;">merged</span>)
 - [#111](https://github.com/rust-lang/thanks/pull/111): Sort submodules to fix non-deterministic commit iteration (<span style="color: #8250DF;">merged</span>)
@@ -568,6 +564,8 @@ Those numbers of PRs are not produced by me using LLMs (as I explained [previous
 - [#133](https://github.com/rust-lang/thanks/pull/133): Ensure that deploys are never executed concurrently (<span style="color: #8250DF;">merged</span>)
 - [#138](https://github.com/rust-lang/thanks/pull/138): Make the projects page be the homepage (<span style="color: #8250DF;">merged</span>)
 - [#141](https://github.com/rust-lang/thanks/pull/141): Make the regression test optional (<span style="color: #8250DF;">merged</span>)
+- [#143](https://github.com/rust-lang/thanks/pull/143): Use deduplicated scores for people and commit count (<span style="color: #8250DF;">merged</span>)
+- [#144](https://github.com/rust-lang/thanks/pull/144): Ignore dependabot and renovatebot by default (<span style="color: #8250DF;">merged</span>)
 
 ### rust-lang/blog.rust-lang.org (10 PRs)
 - [#1910](https://github.com/rust-lang/blog.rust-lang.org/pull/1910): Add post about using `-Zembed-metadata=no` by default on nightly (<span style="color: #8250DF;">merged</span>)
@@ -651,7 +649,7 @@ Those numbers of PRs are not produced by me using LLMs (as I explained [previous
 
 ### rust-lang/www.rust-lang.org (2 PRs)
 - [#2330](https://github.com/rust-lang/www.rust-lang.org/pull/2330): Fix button overflow on funding page on mobile (<span style="color: #8250DF;">merged</span>)
-- [#2335](https://github.com/rust-lang/www.rust-lang.org/pull/2335): Add Scott Schafer to the MiR page (<span style="color: green;">open</span>)
+- [#2335](https://github.com/rust-lang/www.rust-lang.org/pull/2335): Add Scott Schafer to the MiR page (<span style="color: #8250DF;">merged</span>)
 
 ### rust-lang/crater (1 PR)
 - [#851](https://github.com/rust-lang/crater/pull/851): Add MIT/Apache2 license files (<span style="color: green;">open</span>)

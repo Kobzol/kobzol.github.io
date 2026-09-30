@@ -5,6 +5,7 @@ AST: Abstract Syntax Tree
 CGU: Codegen Unit
 CVE: Common Vulnerabilities and Exposures
 FCP: Final Comment Period
+GSoC: Google Summer of Code
 IR: Intermediate Representation (of code)
 JIT: Just-in-time (compilation)
 LLM: Large Language Model
