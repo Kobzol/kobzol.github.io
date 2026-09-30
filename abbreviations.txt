@@ -1,0 +1,14 @@
+# Abbreviations that are automatically defined in every post (see _plugins/abbreviations.rb).
+# Format: ABBR: Explanation
+API: Application Programming Interface
+AST: Abstract Syntax Tree
+CGU: Codegen Unit
+CVE: Common Vulnerabilities and Exposures
+FCP: Final Comment Period
+IR: Intermediate Representation (of code)
+JIT: Just-in-time (compilation)
+LLM: Large Language Model
+LTO: Link-Time Optimization
+PGO: Profile-Guided Optimization
+TLS: Thread-Local Storage
+UB: Undefined Behaviour
