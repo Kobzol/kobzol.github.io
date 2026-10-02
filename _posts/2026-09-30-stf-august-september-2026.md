@@ -300,7 +300,7 @@ As a part of the Rust funding team, I helped bootstrap the Maintainer in Residen
 Apart from that, I finished the [MiR page][mir-page] on the Rust website (implemented in [www.rust-lang.org#2323]), and worked on some tooling to help us track the contributions of funded maintainers. I also prepared a [charter][funding-charter] for the Funding team, to be approved by the Rust Leadership Council.
 
 [mir-page]: https://rust-lang.org/funding/mir.html
-[funding-charter]: https://github.com/rust-lang/leadership-council/issues/318
+[funding-charter]: https://github.com/rust-lang/funding/pull/10
 
 There is a lot more work to do in the Funding team, but I think that we got off to a good start.
 
